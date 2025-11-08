@@ -28,11 +28,6 @@ interface SurveyData {
   questions: Question[];
 }
 
-interface Answer {
-  questionId: string;
-  value: number | string;
-}
-
 export default function AssessmentPage() {
   const router = useRouter();
   const params = useParams();
@@ -45,6 +40,7 @@ export default function AssessmentPage() {
   const [answers, setAnswers] = useState<Record<string, number | string>>({});
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [openEndedAnswer, setOpenEndedAnswer] = useState("");
+  const [childId, setChildId] = useState<string | null>(null);
 
   useEffect(() => {
     if (!isAuthenticated()) {
@@ -53,19 +49,31 @@ export default function AssessmentPage() {
   }, [router, isAuthenticated]);
 
   useEffect(() => {
-    const fetchQuestions = async () => {
+    const fetchData = async () => {
       try {
-        const response = await apiClient.get(`/surveys/${surveyId}/questions`);
-        setSurveyData(response.data);
+        // Fetch child data to get childId
+        const childResponse = await apiClient.get("/onboarding/children");
+        console.log("Child response:", childResponse.data);
+        
+        if (childResponse.data && Array.isArray(childResponse.data) && childResponse.data.length > 0) {
+          const firstChildId = childResponse.data[0].id;
+          console.log("Setting childId:", firstChildId);
+          setChildId(firstChildId);
+        } else {
+          console.warn("No children found or empty array:", childResponse.data);
+        }
+
+        const questionsResponse = await apiClient.get(`/surveys/${surveyId}/questions`);
+        setSurveyData(questionsResponse.data);
       } catch (error) {
-        console.error("Failed to fetch survey questions:", error);
+        console.error("Failed to fetch data:", error);
       } finally {
         setLoading(false);
       }
     };
 
     if (isAuthenticated() && surveyId) {
-      fetchQuestions();
+      fetchData();
     }
   }, [isAuthenticated, surveyId]);
 
@@ -129,22 +137,48 @@ export default function AssessmentPage() {
   };
 
   const handleComplete = async () => {
-    try {
-      const answersArray: Answer[] = Object.entries(answers).map(
-        ([questionId, value]) => ({
-          questionId,
-          value,
-        })
-      );
+    let currentChildId = childId;
 
-      await apiClient.post(`/surveys/${surveyId}/responses`, {
-        surveyId,
-        responses: answersArray,
+    // If childId is not set, try to fetch it
+    if (!currentChildId) {
+      try {
+        const childResponse = await apiClient.get("/onboarding/children");
+        if (childResponse.data && Array.isArray(childResponse.data) && childResponse.data.length > 0) {
+          currentChildId = childResponse.data[0].id;
+          setChildId(currentChildId);
+        } else {
+          console.error("No children found in response");
+          alert("Unable to find child information. Please try again.");
+          return;
+        }
+      } catch (error) {
+        console.error("Failed to fetch child data:", error);
+        alert("Unable to load child information. Please try again.");
+        return;
+      }
+    }
+
+    if (!currentChildId) {
+      console.error("Child ID not found");
+      alert("Unable to find child information. Please try again.");
+      return;
+    }
+
+    try {
+      const responses = Object.entries(answers).map(([questionId, value]) => ({
+        questionId,
+        childId: currentChildId,
+        optionChosen: value,
+      }));
+
+      await apiClient.post(`/surveys/${surveyId}/responses/bulk`, {
+        responses,
       });
 
       router.push("/surveys");
     } catch (error) {
       console.error("Failed to submit survey responses:", error);
+      alert("Failed to submit responses. Please try again.");
     }
   };
 
@@ -176,7 +210,7 @@ export default function AssessmentPage() {
           <div className="text-left">
             <button
               onClick={() => router.push("/surveys")}
-              className="flex items-center gap-2 text-[#8B2D6C] hover:opacity-80 transition-opacity mb-2"
+              className="flex items-center gap-2 text-[#8B2D6C] hover:opacity-80 transition-opacity mb-2 cursor-pointer"
             >
               <ArrowLeft className="w-5 h-5" />
               <span className="font-semibold text-xl">
@@ -301,7 +335,7 @@ export default function AssessmentPage() {
                 <button
                   onClick={handlePrevious}
                   disabled={currentQuestionIndex === 0}
-                  className="flex items-center gap-2 px-6 py-2 rounded-full bg-white border border-[#D8B4E2] text-gray-700 hover:border-[#9B59B6] transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
+                  className="flex items-center gap-2 px-6 py-2 rounded-full bg-white border border-[#D8B4E2] text-gray-700 hover:border-[#9B59B6] transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer shadow-sm"
                 >
                   <ArrowLeft className="w-4 h-4" />
                   Previous
@@ -311,7 +345,7 @@ export default function AssessmentPage() {
                   <button
                     onClick={handleNext}
                     disabled={!canProceed}
-                    className="flex items-center gap-2 px-6 py-2 rounded-full bg-white border border-[#D8B4E2] text-gray-700 hover:border-[#9B59B6] transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
+                    className="flex items-center gap-2 px-6 py-2 rounded-full bg-white border border-[#D8B4E2] text-gray-700 hover:border-[#9B59B6] transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer shadow-sm"
                   >
                     Next
                     <ArrowRight className="w-4 h-4" />
@@ -320,7 +354,7 @@ export default function AssessmentPage() {
                   <button
                     onClick={handleComplete}
                     disabled={!canProceed}
-                    className="flex items-center gap-2 px-6 py-2 rounded-full bg-white border border-[#D8B4E2] text-gray-700 hover:border-[#9B59B6] transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
+                    className="flex items-center gap-2 px-6 py-2 rounded-full bg-white border border-[#D8B4E2] text-gray-700 hover:border-[#9B59B6] transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer shadow-sm"
                   >
                     Complete
                     <ArrowRight className="w-4 h-4" />

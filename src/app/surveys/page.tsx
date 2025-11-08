@@ -175,14 +175,14 @@ export default function SurveysPage() {
                         disabled={survey.status === "completed"}
                         className={`flex items-center justify-start gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-300 shadow-[0px_5.3px_26.49px_-13.25px_rgba(255,255,255,0.2),inset_0px_0px_0px_0.66px_rgba(255,255,255,0.06),inset_0.66px_0.66px_0px_0px_rgba(255,255,255,0.08)] ${
                           survey.status === "completed"
-                            ? "text-white bg-transparent cursor-default"
+                            ? "text-white bg-transparent cursor-default group-hover:bg-white group-hover:text-black"
                             : "text-white group-hover:text-black hover:opacity-90 cursor-pointer bg-transparent group-hover:bg-white"
                         }`}
                       >
                         {survey.status === "completed" ? (
                           <>
                             Completed
-                            <Check className="w-3 h-3 text-white" />
+                            <Check className="w-3 h-3 text-white group-hover:text-black transition-colors duration-300" />
                           </>
                         ) : (
                           <>
@@ -200,8 +200,8 @@ export default function SurveysPage() {
             {firstTwoCompleted && displayedSurveys.length === 2 && (
               <div className="flex justify-center mt-8">
                 <button
-                  onClick={() => router.push("/dashboard")}
-                  className="px-8 py-3 rounded-full text-white font-semibold hover:opacity-90 transition-opacity shadow-lg"
+                  onClick={() => router.push("/flow")}
+                  className="px-8 py-3 rounded-full text-white font-semibold hover:opacity-90 transition-opacity shadow-lg cursor-pointer"
                   style={{
                     background:
                       "linear-gradient(180deg, #8B2D6C 0%, #704180 100%)",
