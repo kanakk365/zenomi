@@ -197,9 +197,26 @@ export default function WelcomePage() {
             break;
 
           case 3:
+            const gender = userResponse.toLowerCase().trim();
+            const validGenders = ["male", "female", "other"];
+            
+            if (!validGenders.includes(gender)) {
+              setMessages((prev) => [
+                ...prev,
+                {
+                  id: prev.length + 1,
+                  type: "assistant",
+                  content: "Gender must be one of: male, female, other",
+                },
+              ]);
+              setIsLoading(false);
+              setTimeout(() => inputRef.current?.focus(), 100);
+              return;
+            }
+            
             setChildData((prev) => ({
               ...prev,
-              gender: userResponse.toLowerCase(),
+              gender: gender,
             }));
             if (onboardingFlow?.step4) {
               setMessages((prev) => [
@@ -375,9 +392,25 @@ export default function WelcomePage() {
                       : "bg-white text-[#704180] rounded-tl-xl rounded-tr-xl rounded-bl-xl"
                   }`}
                 >
-                  <p className="text-sm lg:text-base leading-relaxed font-medium">
-                    {msg.content}
-                  </p>
+                  {msg.id === messages.length && currentStep === 5 ? (
+                    <div className="text-sm lg:text-base leading-relaxed font-medium">
+                      <p className="mb-3">Okay! great</p>
+                      <p className="mb-3">
+                        Let&apos;s get started with two assessments to know more
+                        about your teen.
+                      </p>
+                      <ol className="list-decimal list-inside space-y-2 ml-2">
+                        <li className="font-semibold">
+                          Relationship with your Teen
+                        </li>
+                        <li className="font-semibold">Challenges you face</li>
+                      </ol>
+                    </div>
+                  ) : (
+                    <p className="text-sm lg:text-base leading-relaxed font-medium">
+                      {msg.content}
+                    </p>
+                  )}
                 </div>
                 {msg.type === "user" && (
                   <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shrink-0 border-2 border-gray-200">
@@ -386,10 +419,24 @@ export default function WelcomePage() {
                 )}
               </div>
             ))}
+            {currentStep === 5 && (
+              <div className="flex justify-center mt-4 mb-4">
+                <button
+                  onClick={() => router.push("/surveys")}
+                  className="px-8 py-3 rounded-full cursor-pointer text-white font-semibold hover:opacity-90 transition-opacity shadow-lg"
+                  style={{
+                    background:
+                      "linear-gradient(180deg, #8B2D6C 0%, #704180 100%)",
+                  }}
+                >
+                  Get started
+                </button>
+              </div>
+            )}
             <div ref={messagesEndRef} />
           </div>
 
-          {currentStep < 5 ? (
+          {currentStep < 5 && (
             <form onSubmit={handleSendMessage} className="relative">
               <input
                 ref={inputRef}
@@ -413,19 +460,6 @@ export default function WelcomePage() {
                 <ArrowRight className="w-5 h-5 text-white" />
               </button>
             </form>
-          ) : (
-            <div className="flex justify-center">
-              <button
-                onClick={() => router.push("/assessments")}
-                className="px-8 py-3 rounded-full text-white font-semibold hover:opacity-90 transition-opacity"
-                style={{
-                  background:
-                    "linear-gradient(180deg, #8B2D6C 0%, #704180 100%)",
-                }}
-              >
-                Get started
-              </button>
-            </div>
           )}
         </div>
       </div>
