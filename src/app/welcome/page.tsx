@@ -48,7 +48,9 @@ export default function WelcomePage() {
   const inputRef = useRef<HTMLInputElement>(null);
   const [messages, setMessages] = useState<Message[]>([]);
   const [currentStep, setCurrentStep] = useState(1);
-  const [onboardingFlow, setOnboardingFlow] = useState<OnboardingFlow | null>(null);
+  const [onboardingFlow, setOnboardingFlow] = useState<OnboardingFlow | null>(
+    null
+  );
   const [childData, setChildData] = useState<ChildData>({
     name: "",
     age: 0,
@@ -76,7 +78,7 @@ export default function WelcomePage() {
       try {
         const response = await apiClient.get("/onboarding/flow");
         setOnboardingFlow(response.data);
-        
+
         // Initialize with step 1 intro and question
         if (response.data.step1) {
           setMessages([
@@ -99,7 +101,8 @@ export default function WelcomePage() {
           {
             id: 1,
             type: "assistant",
-            content: "👋 Hi, I'm Zenai, your parenting assistant. Let's get to know your teen better!",
+            content:
+              "👋 Hi, I'm Zenai, your parenting assistant. Let's get to know your teen better!",
           },
         ]);
       }
@@ -170,7 +173,8 @@ export default function WelcomePage() {
                 {
                   id: prev.length + 1,
                   type: "assistant",
-                  content: "This app is designed for teens aged 18 and under. Please enter a valid age.",
+                  content:
+                    "This app is designed for teens aged 18 and under. Please enter a valid age.",
                 },
               ]);
               setIsLoading(false);
@@ -193,7 +197,10 @@ export default function WelcomePage() {
             break;
 
           case 3:
-            setChildData((prev) => ({ ...prev, gender: userResponse.toLowerCase() }));
+            setChildData((prev) => ({
+              ...prev,
+              gender: userResponse.toLowerCase(),
+            }));
             if (onboardingFlow?.step4) {
               setMessages((prev) => [
                 ...prev,
@@ -229,10 +236,13 @@ export default function WelcomePage() {
 
             // Submit data to API
             try {
-              const response = await apiClient.post("/onboarding/child", updatedChildData);
+              const response = await apiClient.post(
+                "/onboarding/child",
+                updatedChildData
+              );
               console.log("Child data submitted successfully:", response.data);
 
-              // Show final message
+              // Show final message with button
               setTimeout(() => {
                 if (onboardingFlow?.step5) {
                   setMessages((prev) => [
@@ -245,11 +255,6 @@ export default function WelcomePage() {
                   ]);
                 }
                 setCurrentStep(5);
-
-                // Redirect to next page after showing final message
-                setTimeout(() => {
-                  router.push("/dashboard"); // Change to your desired next page
-                }, 3000);
               }, 1500);
             } catch (error) {
               console.error("Failed to submit child data:", error);
@@ -258,7 +263,8 @@ export default function WelcomePage() {
                 {
                   id: prev.length + 1,
                   type: "assistant",
-                  content: "Sorry, there was an error saving your information. Please try again.",
+                  content:
+                    "Sorry, there was an error saving your information. Please try again.",
                 },
               ]);
             }
@@ -383,28 +389,44 @@ export default function WelcomePage() {
             <div ref={messagesEndRef} />
           </div>
 
-          <form onSubmit={handleSendMessage} className="relative">
-            <input
-              ref={inputRef}
-              type="text"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              placeholder="Type your answer here..."
-              disabled={isLoading}
-              autoFocus
-              className="w-full px-4 py-3 pr-12 rounded-full bg-white text-[#704180] placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#704180]/20 text-sm lg:text-base disabled:opacity-50 disabled:cursor-not-allowed"
-            />
-            <button
-              type="submit"
-              disabled={isLoading}
-              className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full flex items-center justify-center hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
-              style={{
-                background: "linear-gradient(180deg, #8B2D6C 0%, #704180 100%)",
-              }}
-            >
-              <ArrowRight className="w-5 h-5 text-white" />
-            </button>
-          </form>
+          {currentStep < 5 ? (
+            <form onSubmit={handleSendMessage} className="relative">
+              <input
+                ref={inputRef}
+                type="text"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                placeholder="Type your answer here..."
+                disabled={isLoading}
+                autoFocus
+                className="w-full px-4 py-3 pr-12 rounded-full bg-white text-[#704180] placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#704180]/20 text-sm lg:text-base disabled:opacity-50 disabled:cursor-not-allowed"
+              />
+              <button
+                type="submit"
+                disabled={isLoading}
+                className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full flex items-center justify-center hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
+                style={{
+                  background:
+                    "linear-gradient(180deg, #8B2D6C 0%, #704180 100%)",
+                }}
+              >
+                <ArrowRight className="w-5 h-5 text-white" />
+              </button>
+            </form>
+          ) : (
+            <div className="flex justify-center">
+              <button
+                onClick={() => router.push("/assessments")}
+                className="px-8 py-3 rounded-full text-white font-semibold hover:opacity-90 transition-opacity"
+                style={{
+                  background:
+                    "linear-gradient(180deg, #8B2D6C 0%, #704180 100%)",
+                }}
+              >
+                Get started
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>
