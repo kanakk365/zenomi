@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, Check, User, Rocket, Crown } from "lucide-react";
 import { useAuthStore } from "@/store/authStore";
+import apiClient from "@/lib/api/client";
 
 export default function PricingPage() {
   const router = useRouter();
@@ -11,6 +12,7 @@ export default function PricingPage() {
   const [billingPeriod, setBillingPeriod] = useState<"monthly" | "annually">(
     "monthly"
   );
+  const [loadingPlanId, setLoadingPlanId] = useState<string | null>(null);
 
   if (!isAuthenticated()) {
     router.push("/signup");
@@ -67,6 +69,45 @@ export default function PricingPage() {
       savePercent: 75,
     },
   ];
+
+  const handleCheckout = async (plan: typeof plans[0]) => {
+    const price = plan.price[billingPeriod];
+    
+    // Skip if plan is free
+    if (price === "Free") {
+      return;
+    }
+
+    // Extract amount from price string (e.g., "$299" -> 299)
+    const amount = parseInt(price.replace(/[^0-9]/g, ""));
+    
+    if (isNaN(amount)) {
+      console.error("Invalid price format");
+      return;
+    }
+
+    setLoadingPlanId(plan.id);
+
+    try {
+      const response = await apiClient.post<{
+        sessionID: string;
+        url: string;
+        amount: number;
+      }>("/payments/users/checkout", {
+        amount,
+      });
+
+      // Redirect to the checkout URL
+      // After payment completion, the payment provider will redirect to /success
+      if (response.data.url) {
+        window.location.assign(response.data.url);
+      }
+    } catch (error) {
+      console.error("Checkout failed:", error);
+      alert("Failed to initiate checkout. Please try again.");
+      setLoadingPlanId(null);
+    }
+  };
 
   return (
     <div className="min-h-screen w-full font-urbanist relative overflow-auto">
@@ -185,8 +226,12 @@ export default function PricingPage() {
                     ))}
                   </ul>
 
-                  <button className="w-full py-2 px-[18px] rounded-xl font-semibold text-base text-white transition-all duration-300 hover:opacity-90 cursor-pointer bg-linear-to-r from-[#8B2D6C] to-[#704180] border border-[#514F6E] shadow-[0px_3px_6px_0px_rgba(7,0,110,0.03),inset_0px_-2px_2px_0px_rgba(10,16,50,0.07)] group-hover:bg-[#a76594] group-hover:border-[#a76594]">
-                    {plan.buttonText}
+                  <button
+                    onClick={() => handleCheckout(plan)}
+                    disabled={loadingPlanId === plan.id}
+                    className="w-full py-2 px-[18px] rounded-xl font-semibold text-base text-white transition-all duration-300 hover:opacity-90 cursor-pointer bg-linear-to-r from-[#8B2D6C] to-[#704180] border border-[#514F6E] shadow-[0px_3px_6px_0px_rgba(7,0,110,0.03),inset_0px_-2px_2px_0px_rgba(10,16,50,0.07)] group-hover:bg-[#a76594] group-hover:border-[#a76594] disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {loadingPlanId === plan.id ? "Processing..." : plan.buttonText}
                   </button>
                 </div>
               </div>
