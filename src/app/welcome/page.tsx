@@ -422,7 +422,7 @@ export default function WelcomePage() {
             {currentStep === 5 && (
               <div className="flex justify-center mt-4 mb-4">
                 <button
-                  onClick={() => router.push("/reports")}
+                  onClick={() => router.push("/surveys")}
                   className="px-8 py-3 rounded-full cursor-pointer text-white font-semibold hover:opacity-90 transition-opacity shadow-lg"
                   style={{
                     background:
