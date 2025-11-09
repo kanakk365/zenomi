@@ -33,6 +33,18 @@ export function DashboardSidebar({
   const navItems = useMemo(() => [...primaryNav], [primaryNav]);
   const supportItems = useMemo(() => [...secondaryNav], [secondaryNav]);
 
+  const isActive = (href: string) => {
+    if (!href || href === "#") {
+      return false;
+    }
+
+    if (href === "/dashboard") {
+      return pathname === "/dashboard";
+    }
+
+    return pathname.startsWith(href);
+  };
+
   return (
     <aside className="hidden xl:flex w-72 flex-col border-r border-[#E6E1F4] bg-white px-8 py-10 shadow-sm">
       <div className="flex items-center gap-3 mb-12">
@@ -48,7 +60,7 @@ export function DashboardSidebar({
       <nav className="flex flex-col gap-1">
         {navItems.map((item) => {
           const Icon = item.icon;
-          const active = item.href !== "#" && pathname.startsWith(item.href);
+          const active = isActive(item.href);
           return (
             <Link
               key={item.label}
@@ -70,7 +82,7 @@ export function DashboardSidebar({
       <div className="mt-auto flex flex-col gap-1">
         {supportItems.map((item) => {
           const Icon = item.icon;
-          const active = item.href !== "#" && pathname.startsWith(item.href);
+          const active = isActive(item.href);
           return (
             <Link
               key={item.label}

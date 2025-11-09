@@ -21,7 +21,7 @@ import { DashboardNavbar } from "@/components/dashboard/Navbar";
 const primaryNav: DashboardNavItem[] = [
   { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
   { label: "Take Assessment", href: "/surveys", icon: ClipboardList },
-  { label: "Reports & Analytics", href: "/reports", icon: BarChart3 },
+  { label: "Reports & Analytics", href: "/dashboard/reports", icon: BarChart3 },
   { label: "Doctor Consultation", href: "#", icon: Stethoscope },
   { label: "Zenai courses", href: "#", icon: BookOpen },
   { label: "Zenai AI", href: "#", icon: Bot },

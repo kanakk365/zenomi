@@ -110,10 +110,10 @@ export default function SignupPage() {
                 </p>
               </div>
 
-              <div className="relative w-full h-[376px] rounded-lg overflow-hidden">
-                <Image
-                  src="/parent.png"
-                  alt="Family"
+              <div className="relative mx-auto w-[300px] h-[376px] rounded-lg overflow-hidden">
+               <Image
+                  src="/family.png"
+                  alt="Parents hugging their smiling child"
                   fill
                   className="object-cover"
                   priority
@@ -227,12 +227,12 @@ export default function SignupPage() {
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="w-full py-2.5 px-5 bg-gradient-to-r from-[#8B2D6C] to-[#704180] text-white text-base font-bold rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full py-2.5 px-5 cursor-pointer bg-linear-to-r from-[#8B2D6C] to-[#704180] text-white text-base font-bold rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isLoading ? 'Signing In...' : 'Sign In'}
                 </button>
 
-                <div className="relative flex items-center justify-center">
+                {/* <div className="relative flex items-center justify-center">
                   <div className="absolute inset-0 flex items-center">
                     <div className="w-full border-t border-[rgba(156,154,165,0.3)]"></div>
                   </div>
@@ -263,7 +263,7 @@ export default function SignupPage() {
                     />
                   </div>
                   <span className="text-base font-normal text-[#1D1C2B]">Sign in with Google</span>
-                </button>
+                </button> */}
               </div>
             </form>
           ) : (
@@ -395,16 +395,16 @@ export default function SignupPage() {
                   {isLoading ? 'Creating Account...' : 'Create Account'}
                 </button>
 
-                <div className="relative flex items-center justify-center">
+                {/* <div className="relative flex items-center justify-center">
                   <div className="absolute inset-0 flex items-center">
                     <div className="w-full border-t border-[rgba(156,154,165,0.3)]"></div>
                   </div>
                   <div className="relative bg-white px-3">
                     <span className="text-xs font-medium text-[rgba(156,154,165,0.3)]">OR</span>
                   </div>
-                </div>
+                </div> */}
 
-                <button
+                {/* <button
                   type="button"
                   className="w-full py-3 px-5 border border-[rgba(112,65,128,0.3)] rounded-lg flex items-center justify-center gap-3 hover:bg-gray-50 transition-colors"
                 >
@@ -426,7 +426,7 @@ export default function SignupPage() {
                     />
                   </div>
                   <span className="text-base font-normal text-[#1D1C2B]">Sign up with Google</span>
-                </button>
+                </button> */}
               </div>
             </form>
           )}

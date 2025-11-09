@@ -28,10 +28,6 @@ export function DashboardNavbar({
         >
           <LayoutDashboard className="h-5 w-5" />
         </button>
-        <div>
-          <p className="text-sm text-[#8F82B0]">{title}</p>
-          <h1 className="text-xl font-semibold text-[#2C1B3A]">{subtitle}</h1>
-        </div>
       </div>
 
       <div className="flex items-center gap-6">
@@ -54,12 +50,6 @@ export function DashboardNavbar({
         <div className="flex items-center gap-3">
           <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#F1E8FF] text-lg font-semibold text-[#8B2D6C]">
             {initials}
-          </div>
-          <div>
-            <p className="text-sm font-semibold text-[#2C1B3A]">
-              {userName || "Sarah Sen"}
-            </p>
-            <p className="text-xs text-[#8F82B0]">{userRole}</p>
           </div>
         </div>
       </div>

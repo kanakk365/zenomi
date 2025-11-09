@@ -251,7 +251,7 @@ export default function AssessmentPage() {
               >
               <div className="relative w-72 h-72 mb-6">
                 <Image
-                  src="/survey.png"
+                  src="/family.png"
                   alt="Family illustration"
                   fill
                   className="object-contain"
