@@ -73,8 +73,8 @@ export default function PricingPage() {
   const handleCheckout = async (plan: typeof plans[0]) => {
     const price = plan.price[billingPeriod];
     
-    // Skip if plan is free
     if (price === "Free") {
+      router.push("/dashboard");
       return;
     }
 
