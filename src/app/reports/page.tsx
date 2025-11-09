@@ -255,7 +255,7 @@ export default function ReportsPage() {
                     </td>
                     <td className="px-6 py-4 text-sm text-gray-900">
                       {result.totalScore > 0
-                        ? `${result.totalScore} / 10`
+                        ? result.totalScore
                         : "-"}
                     </td>
                     <td className="px-6 py-4 text-sm text-gray-900">
@@ -272,7 +272,7 @@ export default function ReportsPage() {
           <div key={survey.surveyId} className="mb-12">
             <div className="bg-[#F5F0F8] rounded-lg p-6">
               <h3 className="text-lg font-semibold text-[#8B2D6C] mb-4 italic">
-                {survey.surveyName} - {survey.totalScore} out of 10
+                {survey.surveyName} - {survey.totalScore}
               </h3>
 
               <div className="bg-white rounded-lg overflow-hidden shadow-sm">
