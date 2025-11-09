@@ -38,6 +38,7 @@ export default function ReportsPage() {
   const { isAuthenticated } = useAuthStore();
   const [results, setResults] = useState<SurveyResult[]>([]);
   const [loading, setLoading] = useState(true);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     if (!isAuthenticated()) {
@@ -78,7 +79,6 @@ export default function ReportsPage() {
       result.surveyName === "Relationship with Your Teen"
   );
 
-  // Prepare data for Recharts
   const chartData = chartSurveys.map((survey) => ({
     name: survey.surveyName,
     score: survey.totalScore,
@@ -105,6 +105,15 @@ export default function ReportsPage() {
               Zenomi – Wellness Report Summary
             </h1>
           </div>
+          <button
+            onClick={() => setShowModal(true)}
+            className="px-6 py-2 rounded-full text-white font-semibold hover:opacity-90 transition-opacity cursor-pointer"
+            style={{
+              background: "linear-gradient(86deg, #704180 5%, #8B2D6C 96%)",
+            }}
+          >
+            Download Report
+          </button>
         </div>
       </div>
 
@@ -309,6 +318,84 @@ export default function ReportsPage() {
           </div>
         ))}
       </div>
+
+      {showModal && (
+        <div className="fixed inset-0 backdrop-blur-sm flex items-center justify-center z-50">
+          <div className="bg-[#EBE5F2] rounded-3xl p-12 max-w-xl w-full mx-4 relative">
+            <button
+              onClick={() => setShowModal(false)}
+              className="absolute top-6 right-6 text-gray-600 hover:text-gray-900 cursor-pointer text-2xl font-light"
+            >
+              ×
+            </button>
+
+            <div className="flex justify-center mb-6">
+              <div className="w-[73px] h-[73px] rounded-full bg-[rgba(116,63,126,0.31)] flex items-center justify-center">
+                <svg
+                  width="37"
+                  height="37"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 11H5C3.89543 11 3 11.8954 3 13V20C3 21.1046 3.89543 22 5 22H19C20.1046 22 21 21.1046 21 20V13C21 11.8954 20.1046 11 19 11Z"
+                    fill="#8B2D6C"
+                    stroke="#8B2D6C"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M7 11V7C7 5.67392 7.52678 4.40215 8.46447 3.46447C9.40215 2.52678 10.6739 2 12 2C13.3261 2 14.5979 2.52678 15.5355 3.46447C16.4732 4.40215 17 5.67392 17 7V11"
+                    stroke="#8B2D6C"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </div>
+            </div>
+
+            <div className="text-center mb-10">
+              <h2
+                className="text-xl font-medium mb-6"
+                style={{
+                  background:
+                    "linear-gradient(90deg, #8B2D6C 0%, #704180 100%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  backgroundClip: "text",
+                }}
+              >
+                Your Cognitive Flexibility Check Report is Locked!
+              </h2>
+              <p className="text-sm text-black leading-relaxed">
+                Upgrade to Premium to unlock full access to personalized
+                reports, insights, and recommendations for your child.
+              </p>
+            </div>
+
+            <div className="flex flex-col items-center gap-5">
+              <button
+                onClick={() => router.push("/pricing")}
+                className="w-[220px] px-6 py-2 rounded-full text-white font-semibold hover:opacity-90 transition-opacity cursor-pointer"
+                style={{
+                  background: "linear-gradient(86deg, #704180 5%, #8B2D6C 96%)",
+                }}
+              >
+                Buy Premium
+              </button>
+              <button
+                onClick={() => setShowModal(false)}
+                className="w-[220px] px-6 py-2 rounded-full text-[#8B2D6C] font-medium border border-[#8B2D6C] hover:bg-[#8B2D6C] hover:text-white transition-all cursor-pointer"
+              >
+                Back to assessments
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
