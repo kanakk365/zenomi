@@ -97,8 +97,6 @@ export default function PricingPage() {
         amount,
       });
 
-      // Redirect to the checkout URL
-      // After payment completion, the payment provider will redirect to /success
       if (response.data.url) {
         window.location.assign(response.data.url);
       }
