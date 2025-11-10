@@ -83,8 +83,8 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="flex h-screen w-full font-urbanist overflow-hidden">
-      <div className="relative hidden lg:flex lg:w-1/2 flex-col justify-between p-12 px-16 overflow-hidden h-full" style={{
+    <div className="flex min-h-screen w-full font-urbanist">
+      <div className="relative hidden lg:flex lg:w-1/2 flex-col justify-between p-8 xl:p-12 px-8 xl:px-16 min-h-screen" style={{
         background: 'linear-gradient(90deg, #704180 6.54%, #8B2D6C 90.65%)'
       }}>
         <div className="absolute inset-0" style={{
@@ -100,17 +100,17 @@ export default function SignupPage() {
           </div>
 
           <div className="flex-1 flex items-center justify-center">
-             <div className="w-full rounded-lg p-10 px-16 pb-0 pr-0 flex flex-col gap-8 backdrop-blur-xs bg-white/10">
-              <div className="flex flex-col gap-6">
-                <h1 className="text-4xl font-bold text-white leading-tight">
+             <div className="w-full rounded-lg p-6 xl:p-10 px-8 xl:px-16 pb-0 pr-0 flex flex-col gap-6 xl:gap-8 backdrop-blur-xs bg-white/10">
+              <div className="flex flex-col gap-4 xl:gap-6">
+                <h1 className="text-3xl xl:text-4xl font-bold text-white leading-tight">
                   Welcome to Zenomi
                 </h1>
-                  <p className="text-2xl font-medium leading-relaxed bg-gradient-to-r from-[#F7C569] via-[#FBE2B4] to-[#F8E4FF] bg-clip-text text-transparent">
+                  <p className="text-xl xl:text-2xl font-medium leading-relaxed bg-gradient-to-r from-[#F7C569] via-[#FBE2B4] to-[#F8E4FF] bg-clip-text text-transparent">
                   AI-driven assessment, meaningful reports, expert help
                 </p>
               </div>
 
-              <div className="relative mx-auto w-[300px] h-[376px] rounded-lg overflow-hidden">
+              <div className="relative mx-auto w-[250px] xl:w-[300px] h-[300px] xl:h-[376px] rounded-lg overflow-hidden">
                <Image
                   src="/family.png"
                   alt="Parents hugging their smiling child"
@@ -128,20 +128,20 @@ export default function SignupPage() {
         </div>
       </div>
 
-      <div className="w-full lg:w-1/2 flex items-center justify-center bg-white p-8 lg:p-12 h-full overflow-y-hidden">
-        <div className="w-full max-w-[358px]">
+      <div className="w-full lg:w-1/2 flex items-center justify-center bg-white p-6 sm:p-8 lg:p-10 xl:p-12 min-h-screen">
+        <div className="w-full max-w-[358px] py-6 lg:py-0">
           {/* Logo */}
-          <div className="mb-8 flex justify-center">
+          <div className="mb-6 sm:mb-8 flex justify-center">
             <div className="flex items-center gap-2">
               <div className="w-10 h-10 bg-gradient-to-r from-[#8B2D6C] to-[#704180] rounded-lg flex items-center justify-center">
                 <span className="text-2xl font-bold text-white">Z</span>
               </div>
-              <span className="text-xl font-semibold text-[#704180]">Zenomi Health</span>
+              <span className="text-lg sm:text-xl font-semibold text-[#704180]">Zenomi Health</span>
             </div>
           </div>
 
           {/* Tabs */}
-          <div className="mb-8">
+          <div className="mb-6 sm:mb-8">
             <div className="flex gap-1 bg-[#F2EEF4] p-1 rounded-lg">
               <button
                 onClick={() => setIsSignIn(false)}

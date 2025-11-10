@@ -59,6 +59,7 @@ export default function WelcomePage() {
     aboutChildMind: "",
   });
   const [isLoading, setIsLoading] = useState(false);
+  const hasInitializedRef = useRef(false);
 
   useEffect(() => {
     if (!isAuthenticated()) {
@@ -75,48 +76,84 @@ export default function WelcomePage() {
   }, [messages, isLoading]);
 
   useEffect(() => {
+    // Prevent duplicate initialization
+    if (hasInitializedRef.current || !isAuthenticated() || messages.length > 0) {
+      return;
+    }
+
+    hasInitializedRef.current = true;
+
     const fetchOnboardingFlow = async () => {
       try {
         const response = await apiClient.get("/onboarding/flow");
         setOnboardingFlow(response.data);
 
         if (response.data.step1) {
-          setMessages([
-            {
-              id: 1,
-              type: "assistant",
-              content: response.data.step1.intro,
-            },
-          ]);
-          setTimeout(() => {
-            setMessages((prev) => [
-              ...prev,
+          const intro = response.data.step1.intro || "";
+          const question = response.data.step1.question || "";
+          
+          // If intro and question are the same, only show one message
+          if (intro.trim() === question.trim()) {
+            setMessages([
               {
-                id: 2,
+                id: 1,
                 type: "assistant",
-                content: response.data.step1.question,
+                content: question || intro,
               },
             ]);
-          }, 1000);
+          } else {
+            // Show intro first, then question after delay
+            if (intro) {
+              setMessages([
+                {
+                  id: 1,
+                  type: "assistant",
+                  content: intro,
+                },
+              ]);
+            }
+            // Only add question if it's different from intro
+            if (question && question.trim() !== intro.trim()) {
+              setTimeout(() => {
+                setMessages((prev) => {
+                  // Prevent duplicate question
+                  if (prev.some(msg => msg.content === question)) {
+                    return prev;
+                  }
+                  return [
+                    ...prev,
+                    {
+                      id: Date.now(),
+                      type: "assistant",
+                      content: question,
+                    },
+                  ];
+                });
+              }, 1000);
+            }
+          }
         }
       } catch (error) {
         console.error("Failed to fetch onboarding flow:", error);
-        // Fallback message
-        setMessages([
-          {
-            id: 1,
-            type: "assistant",
-            content:
-              "👋 Hi, I'm Zenai, your parenting assistant. Let's get to know your teen better!",
-          },
-        ]);
+        // Fallback message - only if no messages exist
+        setMessages((prev) => {
+          if (prev.length === 0) {
+            return [
+              {
+                id: 1,
+                type: "assistant",
+                content:
+                  "👋 Hi, I'm Zenai, your parenting assistant. Let's get to know your teen better!",
+              },
+            ];
+          }
+          return prev;
+        });
       }
     };
 
-    if (isAuthenticated()) {
-      fetchOnboardingFlow();
-    }
-  }, [isAuthenticated]);
+    fetchOnboardingFlow();
+  }, [isAuthenticated, messages.length]);
 
   if (!isAuthenticated()) {
     return null;
@@ -293,7 +330,7 @@ export default function WelcomePage() {
           default:
             break;
         }
-      } catch (error) {
+      } catch {
         removeLoadingMessage();
         setIsLoading(false);
       }
@@ -301,7 +338,7 @@ export default function WelcomePage() {
   };
 
   return (
-    <div className="flex h-screen w-full font-urbanist overflow-hidden relative">
+    <div className="flex h-screen w-full font-urbanist relative">
       <div
         className="absolute inset-0"
         style={{
@@ -320,30 +357,30 @@ export default function WelcomePage() {
         />
       </div>
 
-      <div className="relative z-10 flex w-full h-full">
-        <div className="w-[40%] flex items-center justify-center px-8">
-          <div className="w-full max-w-xl rounded-2xl p-8 lg:p-12 bg-[#d8bacf] relative overflow-hidden h-[91vh] shadow-lg flex flex-col">
-            <div className="absolute inset-0 z-0">
+      <div className="relative z-10 flex w-full h-full rounded-xl flex-col lg:flex-row">
+        <div className="w-full lg:w-[40%] rounded-2xl flex items-center justify-center px-4 sm:px-6 lg:px-8 py-6 lg:py-0">
+          <div className="w-full max-w-xl rounded-xl p-6 sm:p-8 lg:p-12 bg-[#d8bacf] relative shadow-lg flex flex-col">
+            <div className="absolute inset-0 z-0 rounded-xl">
               <Image
                 src="/rightboxbg.jpg"
                 alt="Background"
                 fill
-                className="object-cover opacity-30"
+                className="object-cover opacity-30 rounded-xl"
               />
             </div>
 
             <div className="relative z-10 flex flex-col flex-1">
               <div className="text-center">
-                <h1 className="text-3xl text-black mb-2">
+                <h1 className="text-2xl sm:text-3xl text-black mb-2">
                   Welcome to{" "}
                   <span className="text-[#704180] font-semibold ">ZenAI</span>
                 </h1>
-                <p className="text-sm font-semibold text-black uppercase ">
+                <p className="text-xs sm:text-sm font-semibold text-black uppercase ">
                   PARENTAL PORTAL
                 </p>
               </div>
 
-              <div className="relative h-72 mx-auto w-60 overflow-hidden my-auto">
+              <div className="relative h-64 sm:h-72 mx-auto w-52 sm:w-60 my-6 sm:my-auto">
                 <Image
                   src="/family.png"
                   alt="Family"
@@ -354,13 +391,13 @@ export default function WelcomePage() {
               </div>
 
               <div
-                className="rounded-xl p-6 py-3 text-white"
+                className="rounded-xl p-4 sm:p-6 py-3 text-white"
                 style={{
                   background:
                     "linear-gradient(90deg, #8B2D6C 0%, #704180 100%)",
                 }}
               >
-                <p className="text-base leading-relaxed">
+                <p className="text-sm sm:text-base leading-relaxed">
                   Zenomi helps understanding your teen&apos;s world helps you
                   guide them better.
                 </p>
@@ -369,12 +406,13 @@ export default function WelcomePage() {
           </div>
         </div>
 
-        <div className="w-[60%] flex flex-col min-h-[91vh] h-full p-6 lg:p-8 relative">
-          <div className="flex-1 flex flex-col gap-4 overflow-y-auto pb-4 justify-end">
+        <div className="w-full lg:w-[60%] flex flex-col h-screen lg:h-[91vh] p-4 sm:p-6 lg:p-8 relative">
+          <div className="flex-1 overflow-y-auto min-h-0 scroll-smooth" style={{ scrollbarWidth: 'thin', scrollbarColor: '#8B2D6C #F8E4FF' }}>
+            <div className="flex flex-col gap-4 justify-end min-h-full pb-4">
             {messages.map((msg) => (
               <div
                 key={msg.id}
-                className={`flex gap-3 items-end ${
+                className={`flex gap-3 items-end  ${
                   msg.type === "user" ? "justify-end" : "justify-start"
                 }`}
               >
@@ -451,10 +489,11 @@ export default function WelcomePage() {
               </div>
             )}
             <div ref={messagesEndRef} />
+            </div>
           </div>
 
           {currentStep < 5 && (
-            <form onSubmit={handleSendMessage} className="relative">
+            <form onSubmit={handleSendMessage} className="relative mt-4 shrink-0">
               <input
                 ref={inputRef}
                 type="text"

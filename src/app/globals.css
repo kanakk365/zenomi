@@ -62,3 +62,22 @@ body {
   background-size: 200% 100%;
   animation: shimmer 1.5s ease-in-out infinite;
 }
+
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F8E4FF;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #8B2D6C;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #704180;
+}
