@@ -14,10 +14,8 @@ export default function PricingPage() {
   );
   const [loadingPlanId, setLoadingPlanId] = useState<string | null>(null);
 
-  if (!isAuthenticated()) {
-    router.push("/signup");
-    return null;
-  }
+  // Allow access if user is authenticated (has access token)
+  // No redirect needed - let them view pricing and optionally upgrade
 
   const plans = [
     {
