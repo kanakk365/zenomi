@@ -51,25 +51,36 @@ export default function FlowPage() {
       try {
         // Fetch child data to get childId
         const childResponse = await apiClient.get("/onboarding/children");
-        if (childResponse.data && Array.isArray(childResponse.data) && childResponse.data.length > 0) {
+        if (
+          childResponse.data &&
+          Array.isArray(childResponse.data) &&
+          childResponse.data.length > 0
+        ) {
           setChildId(childResponse.data[0].id);
         }
 
         // Fetch surveys to get the third survey ID
         const surveysResponse = await apiClient.get("/surveys");
         const surveys = surveysResponse.data;
-        
+
         if (surveys && Array.isArray(surveys) && surveys.length >= 3) {
           const thirdSurvey = surveys[2];
           setThirdSurveyId(thirdSurvey.id);
 
           // Fetch flow data for the third survey
-          const flowResponse = await apiClient.get(`/surveys/${thirdSurvey.id}/flow`);
+          const flowResponse = await apiClient.get(
+            `/surveys/${thirdSurvey.id}/flow`
+          );
           setFlowData(flowResponse.data);
 
           // Fetch questions to get the question ID
-          const questionsResponse = await apiClient.get(`/surveys/${thirdSurvey.id}/questions`);
-          if (questionsResponse.data?.questions && questionsResponse.data.questions.length > 0) {
+          const questionsResponse = await apiClient.get(
+            `/surveys/${thirdSurvey.id}/questions`
+          );
+          if (
+            questionsResponse.data?.questions &&
+            questionsResponse.data.questions.length > 0
+          ) {
             setQuestionId(questionsResponse.data.questions[0].id);
           }
         }
@@ -94,7 +105,13 @@ export default function FlowPage() {
   };
 
   const handleSubmit = async () => {
-    if (!childId || !thirdSurveyId || !questionId || !flowData || selectedOptions.length === 0) {
+    if (
+      !childId ||
+      !thirdSurveyId ||
+      !questionId ||
+      !flowData ||
+      selectedOptions.length === 0
+    ) {
       console.error("Missing required data");
       return;
     }
@@ -103,7 +120,7 @@ export default function FlowPage() {
 
     try {
       const currentStep = flowData.steps[0];
-      
+
       // Get selected option labels
       const selectedLabels = selectedOptions
         .map((optionId) => {
@@ -158,8 +175,7 @@ export default function FlowPage() {
   const currentStep = flowData.steps[0];
 
   return (
-    <div className="h-screen w-full font-urbanist relative overflow-hidden">
-      {/* Background with gradient and grid */}
+    <div className="h-screen w-full font-urbanist relative max-h-screen overflow-y-auto">
       <div
         className="absolute inset-0"
         style={{
@@ -178,7 +194,6 @@ export default function FlowPage() {
         />
       </div>
 
-      {/* Main content */}
       <div className="relative z-10 h-full flex">
         {/* Left side - Welcome section */}
         <div className="w-1/2 flex flex-col items-center justify-center p-12">
@@ -203,14 +218,15 @@ export default function FlowPage() {
 
           <div className="bg-white/10 backdrop-blur-sm rounded-2xl px-6 py-4 max-w-sm">
             <p className="text-white text-center text-sm">
-              Zenomi helps understanding your teen&apos;s world helps you guide them better.
+              Zenomi helps understanding your teen&apos;s world helps you guide
+              them better.
             </p>
           </div>
         </div>
 
         {/* Right side - Chat section */}
         <div className="w-1/2 flex items-center justify-center p-12">
-          <div className="bg-white/95 backdrop-blur-sm rounded-3xl shadow-2xl w-full max-w-2xl min-h-[700px] flex flex-col overflow-hidden">
+          <div className="bg-white/95 backdrop-blur-sm rounded-3xl shadow-2xl w-full max-w-2xl h-[85vh] max-h-[850px] flex flex-col overflow-hidden">
             {/* Bot header */}
             <div className="flex items-center gap-3 px-8 py-6 bg-[#f7f0f5]">
               <div className="w-12 h-12 rounded-full bg-[#8B2D6C] flex items-center justify-center">
@@ -229,8 +245,8 @@ export default function FlowPage() {
             </div>
 
             {/* Chat messages */}
-            <div className="space-y-4 flex-1 px-8 pt-6 flex flex-col justify-end">
-              {/* Intro message */}
+            <div className="flex-1 px-8 pt-6 pb-6 overflow-y-auto">
+              <div className="space-y-4 flex flex-col min-h-full justify-end">
               <div className="flex gap-3">
                 <div className="w-10 h-10 rounded-full bg-[#8B2D6C] flex items-center justify-center shrink-0">
                   <Image
@@ -246,8 +262,7 @@ export default function FlowPage() {
                 </div>
               </div>
 
-              {/* Question message */}
-              <div className="flex gap-3">
+              <div className="flex gap-3 ">
                 <div className="w-10 h-10 rounded-full bg-[#8B2D6C] flex items-center justify-center shrink-0">
                   <Image
                     src="/purplebot.svg"
@@ -299,7 +314,6 @@ export default function FlowPage() {
                 </div>
               </div>
 
-              {/* User messages - show selected options */}
               {userMessages.length > 0 && (
                 <div className="flex justify-end mt-4">
                   <div className="bg-[#8B2D6C] rounded-tl-2xl rounded-tr-none rounded-br-2xl rounded-bl-2xl px-5 py-4 max-w-[80%]">
@@ -312,7 +326,6 @@ export default function FlowPage() {
                 </div>
               )}
 
-              {/* AI message with Get Report button */}
               {showReportButton && (
                 <div className="flex gap-3 mt-4">
                   <div className="w-10 h-10 rounded-full bg-[#8B2D6C] flex items-center justify-center shrink-0">
@@ -326,13 +339,15 @@ export default function FlowPage() {
                   </div>
                   <div className="bg-[#F5F0F8] rounded-tl-none rounded-tr-2xl rounded-br-2xl rounded-bl-2xl px-5 py-4 flex-1">
                     <p className="text-gray-800 text-sm mb-4">
-                      Great! Your responses have been submitted successfully. Click below to view your personalized report.
+                      Great! Your responses have been submitted successfully.
+                      Click below to view your personalized report.
                     </p>
                     <button
                       onClick={() => router.push("/reports")}
                       className="px-6 py-2 rounded-full text-white font-medium hover:opacity-90 transition-opacity cursor-pointer"
                       style={{
-                        background: "linear-gradient(180deg, #8B2D6C 0%, #704180 100%)",
+                        background:
+                          "linear-gradient(180deg, #8B2D6C 0%, #704180 100%)",
                       }}
                     >
                       Get Report
@@ -340,6 +355,7 @@ export default function FlowPage() {
                   </div>
                 </div>
               )}
+              </div>
             </div>
 
             {/* Input area */}
@@ -355,7 +371,8 @@ export default function FlowPage() {
                 disabled={selectedOptions.length === 0 || isSubmitting}
                 className="w-12 h-12 rounded-full flex items-center justify-center transition-opacity disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
                 style={{
-                  background: "linear-gradient(180deg, #8B2D6C 0%, #704180 100%)",
+                  background:
+                    "linear-gradient(180deg, #8B2D6C 0%, #704180 100%)",
                 }}
               >
                 {isSubmitting ? (
@@ -399,4 +416,3 @@ export default function FlowPage() {
     </div>
   );
 }
-
