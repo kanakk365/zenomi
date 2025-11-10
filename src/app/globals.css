@@ -29,3 +29,36 @@ body {
 .font-urbanist {
   font-family: var(--font-urbanist), sans-serif;
 }
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(248, 228, 255, 0.3) 0%,
+    rgba(255, 255, 255, 0.5) 25%,
+    rgba(248, 228, 255, 0.3) 50%,
+    rgba(255, 255, 255, 0.5) 75%,
+    rgba(248, 228, 255, 0.3) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}

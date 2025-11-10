@@ -29,8 +29,9 @@ interface OnboardingFlow {
 
 interface Message {
   id: number;
-  type: "assistant" | "user";
+  type: "assistant" | "user" | "loading";
   content: string;
+  isTyping?: boolean;
 }
 
 interface ChildData {
@@ -79,7 +80,6 @@ export default function WelcomePage() {
         const response = await apiClient.get("/onboarding/flow");
         setOnboardingFlow(response.data);
 
-        // Initialize with step 1 intro and question
         if (response.data.step1) {
           setMessages([
             {
@@ -87,12 +87,17 @@ export default function WelcomePage() {
               type: "assistant",
               content: response.data.step1.intro,
             },
-            {
-              id: 2,
-              type: "assistant",
-              content: response.data.step1.question,
-            },
           ]);
+          setTimeout(() => {
+            setMessages((prev) => [
+              ...prev,
+              {
+                id: 2,
+                type: "assistant",
+                content: response.data.step1.question,
+              },
+            ]);
+          }, 1000);
         }
       } catch (error) {
         console.error("Failed to fetch onboarding flow:", error);
@@ -117,6 +122,32 @@ export default function WelcomePage() {
     return null;
   }
 
+  const addLoadingMessage = () => {
+    const loadingMessage: Message = {
+      id: messages.length + 1,
+      type: "loading",
+      content: "",
+      isTyping: true,
+    };
+    setMessages((prev) => [...prev, loadingMessage]);
+  };
+
+  const removeLoadingMessage = () => {
+    setMessages((prev) => prev.filter((msg) => msg.type !== "loading"));
+  };
+
+  const addMessageWithDelay = (content: string, delay: number = 1500) => {
+    setTimeout(() => {
+      removeLoadingMessage();
+      const newMessage: Message = {
+        id: Date.now(),
+        type: "assistant",
+        content: content,
+      };
+      setMessages((prev) => [...prev, newMessage]);
+    }, delay);
+  };
+
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!message.trim() || isLoading) return;
@@ -132,6 +163,11 @@ export default function WelcomePage() {
     setMessage("");
     setIsLoading(true);
 
+    // Add loading message after a short delay
+    setTimeout(() => {
+      addLoadingMessage();
+    }, 300);
+
     setTimeout(async () => {
       try {
         // Store the user's response based on current step
@@ -139,61 +175,45 @@ export default function WelcomePage() {
           case 1:
             setChildData((prev) => ({ ...prev, name: userResponse }));
             if (onboardingFlow?.step2) {
-              setMessages((prev) => [
-                ...prev,
-                {
-                  id: prev.length + 1,
-                  type: "assistant",
-                  content: onboardingFlow.step2.question,
-                },
-              ]);
+              addMessageWithDelay(onboardingFlow.step2.question, 2000);
             }
             setCurrentStep(2);
-            setTimeout(() => inputRef.current?.focus(), 100);
+            setTimeout(() => {
+              setIsLoading(false);
+              inputRef.current?.focus();
+            }, 2500);
             break;
 
           case 2:
             const age = parseInt(userResponse);
             if (isNaN(age)) {
-              setMessages((prev) => [
-                ...prev,
-                {
-                  id: prev.length + 1,
-                  type: "assistant",
-                  content: "Please enter a valid age number.",
-                },
-              ]);
-              setIsLoading(false);
-              setTimeout(() => inputRef.current?.focus(), 100);
+              addMessageWithDelay("Please enter a valid age number.", 1500);
+              setTimeout(() => {
+                setIsLoading(false);
+                inputRef.current?.focus();
+              }, 2000);
               return;
             }
             if (age > 18) {
-              setMessages((prev) => [
-                ...prev,
-                {
-                  id: prev.length + 1,
-                  type: "assistant",
-                  content:
-                    "This app is designed for teens aged 18 and under. Please enter a valid age.",
-                },
-              ]);
-              setIsLoading(false);
-              setTimeout(() => inputRef.current?.focus(), 100);
+              addMessageWithDelay(
+                "This app is designed for teens aged 18 and under. Please enter a valid age.",
+                1500
+              );
+              setTimeout(() => {
+                setIsLoading(false);
+                inputRef.current?.focus();
+              }, 2000);
               return;
             }
             setChildData((prev) => ({ ...prev, age }));
             if (onboardingFlow?.step3) {
-              setMessages((prev) => [
-                ...prev,
-                {
-                  id: prev.length + 1,
-                  type: "assistant",
-                  content: onboardingFlow.step3.question,
-                },
-              ]);
+              addMessageWithDelay(onboardingFlow.step3.question, 2000);
             }
             setCurrentStep(3);
-            setTimeout(() => inputRef.current?.focus(), 100);
+            setTimeout(() => {
+              setIsLoading(false);
+              inputRef.current?.focus();
+            }, 2500);
             break;
 
           case 3:
@@ -201,16 +221,11 @@ export default function WelcomePage() {
             const validGenders = ["male", "female", "other"];
             
             if (!validGenders.includes(gender)) {
-              setMessages((prev) => [
-                ...prev,
-                {
-                  id: prev.length + 1,
-                  type: "assistant",
-                  content: "Gender must be one of: male, female, other",
-                },
-              ]);
-              setIsLoading(false);
-              setTimeout(() => inputRef.current?.focus(), 100);
+              addMessageWithDelay("Gender must be one of: male, female, other", 1500);
+              setTimeout(() => {
+                setIsLoading(false);
+                inputRef.current?.focus();
+              }, 2000);
               return;
             }
             
@@ -219,17 +234,13 @@ export default function WelcomePage() {
               gender: gender,
             }));
             if (onboardingFlow?.step4) {
-              setMessages((prev) => [
-                ...prev,
-                {
-                  id: prev.length + 1,
-                  type: "assistant",
-                  content: onboardingFlow.step4.question,
-                },
-              ]);
+              addMessageWithDelay(onboardingFlow.step4.question, 2000);
             }
             setCurrentStep(4);
-            setTimeout(() => inputRef.current?.focus(), 100);
+            setTimeout(() => {
+              setIsLoading(false);
+              inputRef.current?.focus();
+            }, 2500);
             break;
 
           case 4:
@@ -239,16 +250,9 @@ export default function WelcomePage() {
             };
             setChildData(updatedChildData);
 
-            // Show analysing message
+            // Show analysing message with delay
             if (onboardingFlow?.step5) {
-              setMessages((prev) => [
-                ...prev,
-                {
-                  id: prev.length + 1,
-                  type: "assistant",
-                  content: onboardingFlow.step5.analysing,
-                },
-              ]);
+              addMessageWithDelay(onboardingFlow.step5.analysing, 2000);
             }
 
             // Submit data to API
@@ -259,41 +263,41 @@ export default function WelcomePage() {
               );
               console.log("Child data submitted successfully:", response.data);
 
-              // Show final message with button
+              // Show final message with button after longer delay
               setTimeout(() => {
+                removeLoadingMessage();
                 if (onboardingFlow?.step5) {
-                  setMessages((prev) => [
-                    ...prev,
-                    {
-                      id: prev.length + 1,
-                      type: "assistant",
-                      content: onboardingFlow.step5.next,
-                    },
-                  ]);
+                  const finalMessage: Message = {
+                    id: Date.now(),
+                    type: "assistant",
+                    content: onboardingFlow.step5.next,
+                  };
+                  setMessages((prev) => [...prev, finalMessage]);
                 }
                 setCurrentStep(5);
-              }, 1500);
+                setIsLoading(false);
+              }, 3000);
             } catch (error) {
               console.error("Failed to submit child data:", error);
-              setMessages((prev) => [
-                ...prev,
-                {
-                  id: prev.length + 1,
-                  type: "assistant",
-                  content:
-                    "Sorry, there was an error saving your information. Please try again.",
-                },
-              ]);
+              removeLoadingMessage();
+              addMessageWithDelay(
+                "Sorry, there was an error saving your information. Please try again.",
+                1500
+              );
+              setTimeout(() => {
+                setIsLoading(false);
+              }, 2000);
             }
             break;
 
           default:
             break;
         }
-      } finally {
+      } catch (error) {
+        removeLoadingMessage();
         setIsLoading(false);
       }
-    }, 500);
+    }, 800);
   };
 
   return (
@@ -374,7 +378,7 @@ export default function WelcomePage() {
                   msg.type === "user" ? "justify-end" : "justify-start"
                 }`}
               >
-                {msg.type === "assistant" && (
+                {(msg.type === "assistant" || msg.type === "loading") && (
                   <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shrink-0 overflow-hidden">
                     <Image
                       src="/bot.svg"
@@ -385,33 +389,46 @@ export default function WelcomePage() {
                     />
                   </div>
                 )}
-                <div
-                  className={` px-4 py-3 mb-1 ${
-                    msg.type === "assistant"
-                      ? "bg-[#F8E4FF] text-black rounded-tl-xl rounded-tr-xl rounded-br-xl"
-                      : "bg-white text-[#704180] rounded-tl-xl rounded-tr-xl rounded-bl-xl"
-                  }`}
-                >
-                  {msg.id === messages.length && currentStep === 5 ? (
-                    <div className="text-sm lg:text-base leading-relaxed font-medium">
-                      <p className="mb-3">Okay! great</p>
-                      <p className="mb-3">
-                        Let&apos;s get started with two assessments to know more
-                        about your teen.
-                      </p>
-                      <ol className="list-decimal list-inside space-y-2 ml-2">
-                        <li className="font-semibold">
-                          Relationship with your Teen
-                        </li>
-                        <li className="font-semibold">Challenges you face</li>
-                      </ol>
+                {msg.type === "loading" ? (
+                  <div className="bg-[#F8E4FF] text-black rounded-tl-xl rounded-tr-xl rounded-br-xl px-4 py-3 mb-1">
+                    <div className="flex gap-1.5 items-center">
+                      <div className="w-2 h-2 bg-[#8B2D6C] rounded-full animate-bounce" style={{ animationDelay: "0ms" }}></div>
+                      <div className="w-2 h-2 bg-[#8B2D6C] rounded-full animate-bounce" style={{ animationDelay: "150ms" }}></div>
+                      <div className="w-2 h-2 bg-[#8B2D6C] rounded-full animate-bounce" style={{ animationDelay: "300ms" }}></div>
                     </div>
-                  ) : (
-                    <p className="text-sm lg:text-base leading-relaxed font-medium">
-                      {msg.content}
-                    </p>
-                  )}
-                </div>
+                  </div>
+                ) : (
+                  <div
+                    className={`px-4 py-3 mb-1 transition-all duration-300 ease-in-out ${
+                      msg.type === "assistant"
+                        ? "bg-[#F8E4FF] text-black rounded-tl-xl rounded-tr-xl rounded-br-xl"
+                        : "bg-white text-[#704180] rounded-tl-xl rounded-tr-xl rounded-bl-xl"
+                    }`}
+                    style={{
+                      animation: "fadeInUp 0.3s ease-out",
+                    }}
+                  >
+                    {msg.id === messages.length && currentStep === 5 ? (
+                      <div className="text-sm lg:text-base leading-relaxed font-medium">
+                        <p className="mb-3">Okay! great</p>
+                        <p className="mb-3">
+                          Let&apos;s get started with two assessments to know more
+                          about your teen.
+                        </p>
+                        <ol className="list-decimal list-inside space-y-2 ml-2">
+                          <li className="font-semibold">
+                            Relationship with your Teen
+                          </li>
+                          <li className="font-semibold">Challenges you face</li>
+                        </ol>
+                      </div>
+                    ) : (
+                      <p className="text-sm lg:text-base leading-relaxed font-medium">
+                        {msg.content}
+                      </p>
+                    )}
+                  </div>
+                )}
                 {msg.type === "user" && (
                   <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shrink-0 border-2 border-gray-200">
                     <User className="w-6 h-6 text-black" />
