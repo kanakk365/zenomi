@@ -55,7 +55,12 @@ export default function SignupPage() {
         });
         
         setAuth({ accessToken: response.accessToken, refreshToken: response.refreshToken, user: response.user });
-        router.push('/welcome'); // Redirect to welcome/onboarding page
+        
+        if (response.isOnboardingDone) {
+          router.push('/dashboard');
+        } else {
+          router.push('/welcome');
+        }
       } else {
         // Signup
         if (formData.password !== formData.confirmPassword) {
@@ -73,7 +78,13 @@ export default function SignupPage() {
         });
         
         setAuth({ accessToken: response.accessToken, refreshToken: response.refreshToken, user: response.user });
-        router.push('/welcome'); // Redirect to welcome/onboarding page
+        
+        // Check if onboarding is done
+        if (response.isOnboardingDone) {
+          router.push('/dashboard');
+        } else {
+          router.push('/welcome');
+        }
       }
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'An error occurred. Please try again.';

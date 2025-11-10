@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, Check, User, Rocket, Crown } from "lucide-react";
+import { ArrowLeft, Check, Rocket, Crown } from "lucide-react";
 import { useAuthStore } from "@/store/authStore";
 import apiClient from "@/lib/api/client";
 
@@ -21,52 +21,37 @@ export default function PricingPage() {
 
   const plans = [
     {
-      id: "basic",
-      name: "Basic",
-      icon: User,
-      description:
-        "Start with key reports and tips to support your child's growth",
-      price: { monthly: "Free", annually: "Free" },
-      features: [
-        "Access 1 report per month",
-        "Key recommendations & tips",
-        "Limited charts & progress tracking",
-      ],
-      buttonText: "Try now",
-      popular: false,
-      savePercent: null,
-    },
-    {
       id: "standard",
       name: "Standard",
       icon: Rocket,
       description:
-        "Unlock multiple reports, progress charts, and actionable strategies.",
-      price: { monthly: "$299", annually: "$299" },
+        "Essential insights and reports to support your parenting journey",
+      price: { monthly: "₹4119", annually: "₹4119" },
       features: [
-        "Access 3 reports per month",
-        "Full insights + progress charts",
-        "Expert suggestions & actionable strategies",
+        "Reports for Section 1 and 2",
+        "Yearly 4 surveys",
+        "Access to all Micro lessons",
       ],
       buttonText: "Subscribe now",
-      popular: true,
-      savePercent: 65,
+      popular: false,
+      savePercent: null,
     },
     {
       id: "premium",
       name: "Premium",
       icon: Crown,
       description:
-        "Get unlimited reports, expert recommendations, and full progress.",
-      price: { monthly: "$699", annually: "$699" },
+        "Complete access with expert consultations and comprehensive reports",
+      price: { monthly: "₹6179", annually: "₹6179" },
       features: [
-        "Unlimited report access",
-        "Full personalized recommendations",
-        "Detailed progress tracking & expert consultations",
+        "Reports for Section 1, 2, and 3",
+        "Doctor List - Expert Consultations",
+        "Yearly 4 surveys",
+        "Access to all Micro lessons",
       ],
       buttonText: "Subscribe now",
-      popular: false,
-      savePercent: 75,
+      popular: true,
+      savePercent: null,
     },
   ];
 
@@ -122,7 +107,7 @@ export default function PricingPage() {
         />
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 py-12">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 py-10">
         <div className="mb-8">
           <div className="flex items-center gap-4 mb-3">
             <button
@@ -166,7 +151,7 @@ export default function PricingPage() {
           </div>
         </div>
 
-        <div className="flex flex-row gap-8 max-w-6xl mx-auto justify-center">
+        <div className="flex flex-row gap-8 max-w-4xl mx-auto justify-center">
           {plans.map((plan) => {
             const Icon = plan.icon;
             const price = plan.price[billingPeriod];
@@ -174,7 +159,7 @@ export default function PricingPage() {
             return (
               <div
                 key={plan.id}
-                className="relative bg-white rounded-[32px] border border-[#CECECE] flex-1 flex flex-col w-[394px] p-6 gap-8 shadow-[0px_4px_20px_0px_rgba(0,0,0,0.25)] transition-all duration-300 hover:bg-[linear-gradient(180deg,#704180_0%,#8B2D6C_100%)] group"
+                className="relative bg-white rounded-[32px] border border-[#CECECE] flex flex-col w-[380px] max-w-[380px] p-6 gap-8 shadow-[0px_4px_20px_0px_rgba(0,0,0,0.25)] transition-all duration-300 hover:bg-[linear-gradient(180deg,#704180_0%,#8B2D6C_100%)] group"
               >
                 <div className="flex flex-col gap-6">
                   <div className="flex flex-col gap-4">
