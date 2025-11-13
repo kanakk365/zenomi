@@ -26,3 +26,36 @@ export interface AuthResponse {
   isOnboardingDone: boolean;
 }
 
+export interface SurveyAnswer {
+  questionId: string;
+  statement: string;
+  value: number | null;
+  label: string | null;
+  textAnswer: string | null;
+  courseLinks?: string[];
+}
+
+export interface ChildInfo {
+  name: string;
+  age: number;
+  gender: string;
+  createdAt: string;
+}
+
+export interface SurveyResultWithCourseLinks {
+  surveyId: string;
+  surveyName: string;
+  childId: string;
+  totalScore: number;
+  band: string;
+  answers: SurveyAnswer[];
+  child: ChildInfo;
+}
+
+export interface CourseRecommendation {
+  courseLink: string;
+  statement: string;
+  surveyName: string;
+  childName: string;
+}
+

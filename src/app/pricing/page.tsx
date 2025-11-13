@@ -14,8 +14,6 @@ export default function PricingPage() {
   );
   const [loadingPlanId, setLoadingPlanId] = useState<string | null>(null);
 
-  // Allow access if user is authenticated (has access token)
-  // No redirect needed - let them view pricing and optionally upgrade
 
   const plans = [
     {

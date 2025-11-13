@@ -6,11 +6,19 @@ import {
   GraduationCap,
   FileText,
   Users,
-  MessageCircle,
   ArrowRight,
+  X,
+  BookOpen,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import { useAuthStore } from "@/store/authStore";
 import apiClient from "@/lib/api/client";
+import {
+  getSurveyResultsWithCourseLinks,
+  extractCourseRecommendations,
+} from "@/lib/api/surveys";
+import { CourseRecommendation } from "@/lib/api/types";
 
 interface DashboardData {
   summaryMetrics: {
@@ -48,6 +56,59 @@ export default function DashboardPage() {
     null
   );
   const [loading, setLoading] = useState(true);
+  const [courseRecommendations, setCourseRecommendations] = useState<
+    CourseRecommendation[]
+  >([]);
+  const [selectedCourse, setSelectedCourse] = useState<string | null>(null);
+  const [selectedCourseTitle, setSelectedCourseTitle] = useState<string | null>(null);
+  const [coursesLoading, setCoursesLoading] = useState(true);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [iframeLoading, setIframeLoading] = useState(true);
+
+  const availableCourses = [
+    {
+      id: 1,
+      title: "Strengthening Emotional Bonds with Your Teen: A Parent's Guide",
+      link: "https://zenomihealth.github.io/strengtheningemotionalbondswithyourteenaparentsguide/",
+      category: "MENTAL HEALTH",
+      enrolled: 26,
+    },
+    {
+      id: 2,
+      title: "Supporting Teen Emotional Expression: A Guide for Parents",
+      link: "https://zenomihealth.github.io/teenemotionalexpression/",
+      category: "MENTAL HEALTH",
+      enrolled: 45,
+    },
+    {
+      id: 3,
+      title: "Parent Wellness & Positive Role Modeling for Teens",
+      link: "https://zenomihealth.github.io/wellnesspositiverole/",
+      category: "WELLNESS",
+      enrolled: 32,
+    },
+    {
+      id: 4,
+      title: "Helping Teens Thrive: Emotional Intelligence for Parents",
+      link: "https://zenomihealth.github.io/emotionalintelligenceteen/",
+      category: "MENTAL HEALTH",
+      enrolled: 18,
+    },
+    {
+      id: 5,
+      title: "Discovering the Science of Emotions: What Every Parent of a Teen Should Know",
+      link: "https://zenomihealth.github.io/scienceofemotions/",
+      category: "EDUCATION",
+      enrolled: 52,
+    },
+    {
+      id: 6,
+      title: "Strategies to Help your Teen with Stress",
+      link: "https://zenomihealth.github.io/helpteen/",
+      category: "MENTAL HEALTH",
+      enrolled: 38,
+    },
+  ];
 
   useEffect(() => {
     const fetchDashboardData = async () => {
@@ -61,7 +122,20 @@ export default function DashboardPage() {
       }
     };
 
+    const fetchCourseRecommendations = async () => {
+      try {
+        const surveyResults = await getSurveyResultsWithCourseLinks();
+        const courses = extractCourseRecommendations(surveyResults);
+        setCourseRecommendations(courses);
+      } catch (error) {
+        console.error("Failed to fetch course recommendations:", error);
+      } finally {
+        setCoursesLoading(false);
+      }
+    };
+
     fetchDashboardData();
+    fetchCourseRecommendations();
   }, []);
 
   const firstName =
@@ -216,62 +290,233 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        {dashboardData?.inProgressCourses &&
-        dashboardData.inProgressCourses.length > 0 ? (
+{coursesLoading ? (
+          <div className="rounded-3xl border border-[#EFE7FF] bg-white p-8 shadow-sm shadow-[#E7DFFF] flex flex-col items-center justify-center h-full">
+            <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-[#8B2D6C] border-r-transparent"></div>
+            <p className="mt-4 text-sm text-[#8F82B0]">Loading courses...</p>
+          </div>
+        ) : courseRecommendations.length > 0 ? (
           <div className="rounded-3xl bg-gradient-to-br from-[#8B2D6C] via-[#703C91] to-[#4A216A] p-8 text-white shadow-lg flex flex-col justify-center h-full">
-            <div className="flex items-start justify-between gap-4">
+            <div className="flex items-start justify-between gap-4 mb-4">
               <div className="flex-1">
                 <p className="text-xs uppercase tracking-[0.2em] text-[#D8C1F6]">
-                  Category - {dashboardData.inProgressCourses[0].category}
+                  Recommended Courses
                 </p>
                 <h2 className="mt-2 text-xl font-semibold leading-tight">
-                  {dashboardData.inProgressCourses[0].courseName}
+                  Based on your assessments
                 </h2>
               </div>
-              <MessageCircle className="h-6 w-6 text-[#F7EFFE] shrink-0" />
+              <BookOpen className="h-6 w-6 text-[#F7EFFE] shrink-0" />
             </div>
 
-            <p className="mt-4 text-sm text-[#E5D4FA]">
-              Continue your learning journey and unlock personalised insights
-              for your child.
+            <p className="text-sm text-[#E5D4FA] mb-6">
+              Personalized course recommendations to support your child&apos;s growth and development
             </p>
 
-            <div className="mt-6">
-              <div className="flex items-center justify-between text-xs font-medium">
-                <span>{dashboardData.inProgressCourses[0].progress}% complete</span>
-                <span>
-                  {dashboardData.inProgressCourses[0].totalLessons -
-                    dashboardData.inProgressCourses[0].lessonsCompleted}{" "}
-                  lessons left
-                </span>
-              </div>
-              <div className="mt-2 h-2 rounded-full bg-white/20">
-                <div
-                  className="h-full rounded-full bg-[#F7BC7D]"
-                  style={{
-                    width: `${dashboardData.inProgressCourses[0].progress}%`,
+            <div className="space-y-3 max-h-[300px] overflow-y-auto pr-2">
+              {courseRecommendations.slice(0, 5).map((course, index) => (
+                <button
+                  key={index}
+                  onClick={() => {
+                    setSelectedCourse(course.courseLink);
+                    setSelectedCourseTitle(course.statement);
+                    setIframeLoading(true);
                   }}
-                ></div>
-              </div>
+                  className="w-full text-left rounded-2xl bg-white/10 backdrop-blur-sm p-4 transition-all hover:bg-white/20 hover:scale-[1.02] border border-white/10"
+                >
+                  <div className="flex items-start gap-3">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/20 text-white shrink-0">
+                      <GraduationCap className="h-5 w-5" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-sm font-semibold text-white mb-1 line-clamp-2">
+                        {course.statement}
+                      </h3>
+                      <p className="text-xs text-[#D8C1F6]">
+                        From: {course.surveyName}
+                      </p>
+                    </div>
+                    <ArrowRight className="h-5 w-5 text-white/60 shrink-0" />
+                  </div>
+                </button>
+              ))}
             </div>
 
-            <button className="mt-6 inline-flex items-center gap-2 w-28 rounded-full bg-white/15 px-5 py-2 text-sm font-semibold text-white transition-all hover:bg-white/25">
-              Continue
-              <ArrowRight className="h-4 w-4" />
-            </button>
+            {courseRecommendations.length > 5 && (
+              <p className="mt-4 text-xs text-[#D8C1F6] text-center">
+                +{courseRecommendations.length - 5} more courses available
+              </p>
+            )}
           </div>
         ) : (
-          <div className="rounded-3xl border border-[#EFE7FF] bg-white p-8 shadow-sm shadow-[#E7DFFF] flex flex-col items-center justify-center h-full text-center">
-            <MessageCircle className="h-12 w-12 text-[#D8C1F6] mb-4" />
-            <h3 className="text-lg font-semibold text-[#2C1B3A] mb-2">
-              No courses in progress
-            </h3>
-            <p className="text-sm text-[#8F82B0]">
-              Start a course to track your learning journey
-            </p>
+          <div className="rounded-3xl bg-gradient-to-br from-[#4A216A] via-[#703C91] to-[#4A216A] p-4 px-8 pt-8 text-white shadow-lg flex flex-col justify-center h-full relative overflow-hidden">
+
+
+            <div className="relative flex-1 min-h-0">
+              <div className="overflow-hidden h-full">
+                <div
+                  className="flex transition-transform duration-300 ease-in-out h-full"
+                  style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+                >
+                  {availableCourses.map((course) => (
+                    <div
+                      key={course.id}
+                      className="min-w-full shrink-0 w-full"
+                    >
+                      <div
+                        onClick={() => {
+                          setSelectedCourse(course.link);
+                          setSelectedCourseTitle(course.title);
+                          setIframeLoading(true);
+                        }}
+                        className="w-full text-left rounded-3xl bg-gradient-to-b from-[#703C91] to-[#8B2D6C] p-5 transition-all hover:scale-[1.02] cursor-pointer relative overflow-hidden h-full flex flex-col"
+                      >
+                        {/* Background decorative shapes */}
+                        <div className="absolute top-0 right-0 w-32 h-32 opacity-10">
+                          <div className="absolute top-4 right-4 w-8 h-8 bg-white rounded-sm"></div>
+                          <div className="absolute top-12 right-8 w-6 h-6 bg-white rounded-full"></div>
+                          <div className="absolute top-20 right-4 w-10 h-10 bg-white rounded-sm"></div>
+                        </div>
+
+                        <div className="relative z-10 flex flex-col flex-1 justify-between">
+                          {/* Top Section: Category and Title */}
+                          <div className="flex flex-col gap-[9px]">
+                            {/* Category */}
+                            <p 
+                              className="text-[12.87px] uppercase text-[#C0C0C0] font-poppins font-normal leading-[0.93em] tracking-[0.08em]"
+                              style={{ fontFamily: 'Poppins, sans-serif' }}
+                            >
+                              Category - {course.category}
+                            </p>
+
+                            {/* Course Title */}
+                            <h3 
+                              className="text-[14px] font-semibold text-white leading-[1.655em] line-clamp-2"
+                              style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 600 }}
+                            >
+                              {course.title}
+                            </h3>
+                          </div>
+
+                          {/* Middle Section: Continue Button */}
+                          <div className="flex items-start mt-5">
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setSelectedCourse(course.link);
+                                setSelectedCourseTitle(course.title);
+                                setIframeLoading(true);
+                              }}
+                              className="relative z-10 w-[103.83px] h-[28.31px] rounded-[16.95px] border border-white bg-white/27 flex items-center justify-center text-white text-[12px] font-poppins font-normal leading-[0.56em] hover:bg-white/35 transition-colors"
+                              style={{ fontFamily: 'Poppins, sans-serif', padding: '6.1px 13.56px' }}
+                            >
+                              Continue→
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Navigation Arrows */}
+              <button
+                onClick={() => {
+                  if (currentSlide > 0) {
+                    setCurrentSlide(currentSlide - 1);
+                  }
+                }}
+                disabled={currentSlide === 0}
+                className={`absolute -left-7 top-1/2 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm text-white hover:bg-white/30 transition-colors z-10 ${
+                  currentSlide === 0 ? 'opacity-50 cursor-not-allowed' : ''
+                }`}
+                aria-label="Previous course"
+              >
+                <ChevronLeft className="h-5 w-5" />
+              </button>
+
+              <button
+                onClick={() => {
+                  if (currentSlide < availableCourses.length - 1) {
+                    setCurrentSlide(currentSlide + 1);
+                  }
+                }}
+                disabled={currentSlide === availableCourses.length - 1}
+                className={`absolute -right-7 top-1/2 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm text-white hover:bg-white/30 transition-colors z-10 ${
+                  currentSlide === availableCourses.length - 1 ? 'opacity-50 cursor-not-allowed' : ''
+                }`}
+                aria-label="Next course"
+              >
+                <ChevronRight className="h-5 w-5" />
+              </button>
+            </div>
+
+            {/* Dots Indicator */}
+            <div className="flex justify-center gap-2 mt-4">
+              {availableCourses.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentSlide(index)}
+                  className={`h-2 rounded-full transition-all ${
+                    index === currentSlide
+                      ? "w-8 bg-white"
+                      : "w-2 bg-white/30"
+                  }`}
+                  aria-label={`Go to slide ${index + 1}`}
+                />
+              ))}
+            </div>
           </div>
         )}
       </section>
+
+      {/* Iframe Modal for Course Content */}
+      {selectedCourse && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+          <div className="relative w-full h-full max-w-7xl max-h-[90vh] bg-white rounded-3xl shadow-2xl overflow-hidden">
+            <div className="absolute top-0 left-0 right-0 z-10 flex items-center justify-between bg-gradient-to-b from-white to-white/95 px-6 py-4 border-b border-[#EFE7FF]">
+              <h3 className="text-lg font-semibold text-[#2C1B3A] line-clamp-1 pr-4">
+                {selectedCourseTitle || "Course Content"}
+              </h3>
+              <button
+                onClick={() => {
+                  setSelectedCourse(null);
+                  setSelectedCourseTitle(null);
+                }}
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-[#F1E8FF] text-[#8B2D6C] transition-colors hover:bg-[#8B2D6C] hover:text-white shrink-0"
+                aria-label="Close course"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+            {iframeLoading && (
+              <div className="absolute inset-0 flex items-center justify-center pt-16 bg-white/80 backdrop-blur-sm z-5">
+                <div className="text-center">
+                  <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-[#8B2D6C] border-r-transparent"></div>
+                  <p className="mt-4 text-sm text-[#8F82B0]">Loading course...</p>
+                </div>
+              </div>
+            )}
+           <iframe
+        key={selectedCourse}
+        src={selectedCourse}
+        className="w-full h-full pt-16 bg-white"
+        title="Course Content"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+        onLoad={() => {
+          console.log('Iframe loaded successfully:', selectedCourse);
+          setIframeLoading(false);
+        }}
+        onError={() => {
+          console.error('Iframe failed to load:', selectedCourse);
+          setIframeLoading(false);
+        }}
+      />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
