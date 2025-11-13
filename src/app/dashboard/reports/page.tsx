@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { ArrowRight, ChevronLeft, ChevronRight, GraduationCap, X } from "lucide-react";
 import { useAuthStore } from "@/store/authStore";
+import { useRouter } from "next/navigation";
 
 const childOverview = {
   name: "Alex",
@@ -101,6 +102,7 @@ const availableCourses = [
 
 export default function DashboardReportsPage() {
   const { user } = useAuthStore();
+  const router = useRouter();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [selectedCourse, setSelectedCourse] = useState<string | null>(null);
   const [selectedCourseTitle, setSelectedCourseTitle] = useState<string | null>(null);
@@ -116,7 +118,15 @@ export default function DashboardReportsPage() {
   return (
     <div className="flex flex-col gap-10">
       <section className="flex flex-col gap-2">
-        <p className="text-sm font-medium text-[#8F82B0]">Welcome Back, {firstName}</p>
+        <div className="flex items-center justify-between">
+          <p className="text-sm font-medium text-[#8F82B0]">Welcome Back, {firstName}</p>
+          <button 
+            onClick={() => router.push('/dashboard/downloadreport')}
+            className="rounded-full cursor-pointer bg-[#8B2D6C] px-6 py-2 text-sm font-semibold text-white shadow-lg shadow-[#8B2D6C]/25 transition-transform hover:-translate-y-0.5"
+          >
+            Reports
+          </button>
+        </div>
         <div className="flex flex-wrap items-center gap-4">
           <h1 className="text-3xl font-semibold text-[#2C1B3A]">
             How&apos;s Alex doing today?
