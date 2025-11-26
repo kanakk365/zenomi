@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { useAuthStore } from "@/store/authStore";
+import { useIsAuthenticated } from "@/store/authStore";
 import { apiClient } from "@/lib/api/client";
 import {
   BarChart,
@@ -59,14 +59,14 @@ interface SurveyOptionsResponse {
 
 export default function ReportsPage() {
   const router = useRouter();
-  const { isAuthenticated } = useAuthStore();
+  const isAuthenticated = useIsAuthenticated();
   const [results, setResults] = useState<SurveyResult[]>([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [optionsData, setOptionsData] = useState<SurveyOptionsResponse | null>(null);
 
   useEffect(() => {
-    if (!isAuthenticated()) {
+    if (!isAuthenticated) {
       router.push("/signup");
     }
   }, [router, isAuthenticated]);
@@ -86,7 +86,7 @@ export default function ReportsPage() {
       }
     };
 
-    if (isAuthenticated()) {
+    if (isAuthenticated) {
       fetchResults();
     }
   }, [isAuthenticated]);
@@ -129,7 +129,7 @@ export default function ReportsPage() {
       }
     };
 
-    if (isAuthenticated() && !loading) {
+    if (isAuthenticated && !loading) {
       fetchOptionsData();
     }
   }, [isAuthenticated, loading]);
@@ -534,7 +534,7 @@ export default function ReportsPage() {
                   backgroundClip: "text",
                 }}
               >
-                Your Cognitive Flexibility Check Report is Locked!
+                Your Parent-Teen Relationship Report is Locked
               </h2>
               <p className="text-sm text-black leading-relaxed">
                 Upgrade to Premium to unlock full access to personalized

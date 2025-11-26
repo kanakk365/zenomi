@@ -15,23 +15,22 @@ interface AuthState {
     user: User | null;
     setAuth: (data: { accessToken?: string; refreshToken?: string; user?: User | null }) => void;
     logout:()=>void;
-    isAuthenticated:()=> boolean;
 }
 
 export const useAuthStore = create<AuthState>()(
 
-    persist((set, get)=>({
+    persist((set)=>({
         accessToken: '',
         refreshToken: '',
         user: null,
         setAuth: (data) => set((state)=>({...state,...data})),
         logout: () => set({ accessToken: '', refreshToken: '', user: null }),
-        isAuthenticated: () => {
-            const state = get();
-            return !!state.accessToken && !!state.user;
-        }
     }),{
         name: 'auth-storage',
         storage: createJSONStorage(()=>localStorage),
     }),
 )
+
+export const useIsAuthenticated = () => {
+    return useAuthStore((state) => !!state.accessToken && !!state.user);
+}

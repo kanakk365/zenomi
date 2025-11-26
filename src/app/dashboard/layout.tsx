@@ -11,7 +11,7 @@ import {
   Bot,
   User,
 } from "lucide-react";
-import { useAuthStore } from "@/store/authStore";
+import { useAuthStore, useIsAuthenticated } from "@/store/authStore";
 import {
   DashboardSidebar,
   DashboardNavItem,
@@ -38,9 +38,8 @@ export default function DashboardLayout({
 }) {
   const router = useRouter();
   const pathname = usePathname();
-  const { isAuthenticated, logout, user } = useAuthStore();
-
-  const authenticated = isAuthenticated();
+  const { logout, user } = useAuthStore();
+  const authenticated = useIsAuthenticated();
 
   useEffect(() => {
     if (!authenticated) {

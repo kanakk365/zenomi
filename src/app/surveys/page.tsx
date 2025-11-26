@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { ArrowRight, Check } from "lucide-react";
-import { useAuthStore } from "@/store/authStore";
+import { useIsAuthenticated } from "@/store/authStore";
 import { apiClient } from "@/lib/api/client";
 
 interface Survey {
@@ -16,12 +16,12 @@ interface Survey {
 
 export default function SurveysPage() {
   const router = useRouter();
-  const { isAuthenticated } = useAuthStore();
+  const isAuthenticated = useIsAuthenticated();
   const [surveys, setSurveys] = useState<Survey[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!isAuthenticated()) {
+    if (!isAuthenticated) {
       router.push("/signup");
     }
   }, [router, isAuthenticated]);
@@ -38,12 +38,12 @@ export default function SurveysPage() {
       }
     };
 
-    if (isAuthenticated()) {
+    if (isAuthenticated) {
       fetchSurveys();
     }
   }, [isAuthenticated]);
 
-  if (!isAuthenticated()) {
+  if (!isAuthenticated) {
     return null;
   }
 
@@ -62,8 +62,10 @@ export default function SurveysPage() {
   };
 
   const displayedSurveys = surveys.slice(0, 2);
-  
-  const firstTwoCompleted = displayedSurveys.every(s => s.status === "completed");
+
+  const firstTwoCompleted = displayedSurveys.every(
+    (s) => s.status === "completed"
+  );
 
   return (
     <div className="min-h-screen w-full font-urbanist relative overflow-auto">
@@ -105,12 +107,12 @@ export default function SurveysPage() {
       <div className="relative z-10 max-w-6xl mx-auto px-6 py-12 lg:py-16">
         <div className="text-center mb-12">
           <h1 className="text-3xl lg:text-4xl font-medium text-[#8B2D6C] mb-4">
-            Find the Right Assessment as per your Teen&apos;s needs
+            Parent Teen Relationship Survey
           </h1>
           <div className="w-170 h-px bg-[#8B2D6C] mx-auto mb-6"></div>
           <p className="text-gray-600 text-base lg:text-lg max-w-2xl mx-auto">
-            Discover guided assessments designed to help you identify and
-            support your teen&apos;s emotional and behavioral needs.
+            The assessments below are designed to help you identify and support
+            your teen's emotional and behavioral needs.
           </p>
         </div>
 
@@ -171,7 +173,9 @@ export default function SurveysPage() {
                       }}
                     >
                       <button
-                        onClick={() => handleAssessmentClick(survey.id, survey.status)}
+                        onClick={() =>
+                          handleAssessmentClick(survey.id, survey.status)
+                        }
                         disabled={survey.status === "completed"}
                         className={`flex items-center justify-start gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-300 shadow-[0px_5.3px_26.49px_-13.25px_rgba(255,255,255,0.2),inset_0px_0px_0px_0.66px_rgba(255,255,255,0.06),inset_0.66px_0.66px_0px_0px_rgba(255,255,255,0.08)] ${
                           survey.status === "completed"

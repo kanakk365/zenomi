@@ -4,7 +4,7 @@ import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { useReactToPrint } from "react-to-print";
-import { useAuthStore } from "@/store/authStore";
+import { useIsAuthenticated } from "@/store/authStore";
 import { apiClient } from "@/lib/api/client";
 import {
   BarChart,
@@ -60,7 +60,7 @@ interface SurveyOptionsResponse {
 
 export default function DownloadReportPage() {
   const router = useRouter();
-  const { isAuthenticated } = useAuthStore();
+  const isAuthenticated = useIsAuthenticated();
   const [results, setResults] = useState<SurveyResult[]>([]);
   const [loading, setLoading] = useState(true);
   const [optionsData, setOptionsData] = useState<SurveyOptionsResponse | null>(null);
@@ -71,7 +71,7 @@ export default function DownloadReportPage() {
   });
 
   useEffect(() => {
-    if (!isAuthenticated()) {
+    if (!isAuthenticated) {
       router.push("/signup");
     }
   }, [router, isAuthenticated]);
@@ -91,7 +91,7 @@ export default function DownloadReportPage() {
       }
     };
 
-    if (isAuthenticated()) {
+    if (isAuthenticated) {
       fetchResults();
     }
   }, [isAuthenticated]);
@@ -134,7 +134,7 @@ export default function DownloadReportPage() {
       }
     };
 
-    if (isAuthenticated() && !loading) {
+    if (isAuthenticated && !loading) {
       fetchOptionsData();
     }
   }, [isAuthenticated, loading]);

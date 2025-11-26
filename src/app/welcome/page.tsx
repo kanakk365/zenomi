@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { ArrowRight, User } from "lucide-react";
-import { useAuthStore } from "@/store/authStore";
+import { useIsAuthenticated } from "@/store/authStore";
 import { apiClient } from "@/lib/api/client";
 
 interface OnboardingFlow {
@@ -43,7 +43,7 @@ interface ChildData {
 
 export default function WelcomePage() {
   const router = useRouter();
-  const { isAuthenticated } = useAuthStore();
+  const isAuthenticated = useIsAuthenticated();
   const [message, setMessage] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -62,7 +62,7 @@ export default function WelcomePage() {
   const hasInitializedRef = useRef(false);
 
   useEffect(() => {
-    if (!isAuthenticated()) {
+    if (!isAuthenticated) {
       router.push("/signup");
     }
   }, [router, isAuthenticated]);
@@ -77,7 +77,7 @@ export default function WelcomePage() {
 
   useEffect(() => {
     // Prevent duplicate initialization
-    if (hasInitializedRef.current || !isAuthenticated() || messages.length > 0) {
+    if (hasInitializedRef.current || !isAuthenticated || messages.length > 0) {
       return;
     }
 
@@ -155,7 +155,7 @@ export default function WelcomePage() {
     fetchOnboardingFlow();
   }, [isAuthenticated, messages.length]);
 
-  if (!isAuthenticated()) {
+  if (!isAuthenticated) {
     return null;
   }
 
@@ -398,8 +398,7 @@ export default function WelcomePage() {
                 }}
               >
                 <p className="text-sm sm:text-base leading-relaxed">
-                  Zenomi helps understanding your teen&apos;s world helps you
-                  guide them better.
+                  Understanding your teen's world helps you guide them with greater clarity and confidence!
                 </p>
               </div>
             </div>

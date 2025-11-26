@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { useAuthStore } from "@/store/authStore";
+import { useIsAuthenticated } from "@/store/authStore";
 import { apiClient } from "@/lib/api/client";
 
 interface Option {
@@ -28,7 +28,7 @@ interface FlowData {
 
 export default function FlowPage() {
   const router = useRouter();
-  const { isAuthenticated } = useAuthStore();
+  const isAuthenticated = useIsAuthenticated();
 
   const [flowData, setFlowData] = useState<FlowData | null>(null);
   const [loading, setLoading] = useState(true);
@@ -41,7 +41,7 @@ export default function FlowPage() {
   const [showReportButton, setShowReportButton] = useState(false);
 
   useEffect(() => {
-    if (!isAuthenticated()) {
+    if (!isAuthenticated) {
       router.push("/signup");
     }
   }, [router, isAuthenticated]);
@@ -91,7 +91,7 @@ export default function FlowPage() {
       }
     };
 
-    if (isAuthenticated()) {
+    if (isAuthenticated) {
       fetchData();
     }
   }, [isAuthenticated]);
@@ -218,8 +218,7 @@ export default function FlowPage() {
 
           <div className="bg-white/10 backdrop-blur-sm rounded-2xl px-6 py-4 max-w-sm">
             <p className="text-white text-center text-sm">
-              Zenomi helps understanding your teen&apos;s world helps you guide
-              them better.
+              Understanding your teen's world helps you guide them with greater clarity and confidence!
             </p>
           </div>
         </div>

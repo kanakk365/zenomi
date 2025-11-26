@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
 import Image from "next/image";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { useAuthStore } from "@/store/authStore";
+import { useIsAuthenticated } from "@/store/authStore";
 import { apiClient } from "@/lib/api/client";
 
 interface LikertOption {
@@ -32,7 +32,7 @@ export default function AssessmentPage() {
   const router = useRouter();
   const params = useParams();
   const surveyId = params.surveyId as string;
-  const { isAuthenticated } = useAuthStore();
+  const isAuthenticated = useIsAuthenticated();
 
   const [surveyData, setSurveyData] = useState<SurveyData | null>(null);
   const [loading, setLoading] = useState(true);
@@ -43,7 +43,7 @@ export default function AssessmentPage() {
   const [childId, setChildId] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!isAuthenticated()) {
+    if (!isAuthenticated) {
       router.push("/signup");
     }
   }, [router, isAuthenticated]);
@@ -72,7 +72,7 @@ export default function AssessmentPage() {
       }
     };
 
-    if (isAuthenticated() && surveyId) {
+    if (isAuthenticated && surveyId) {
       fetchData();
     }
   }, [isAuthenticated, surveyId]);
@@ -96,7 +96,7 @@ export default function AssessmentPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentQuestionIndex, surveyData]);
 
-  if (!isAuthenticated() || loading) {
+  if (!isAuthenticated || loading) {
     return null;
   }
 

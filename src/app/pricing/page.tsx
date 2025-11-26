@@ -3,12 +3,12 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, Check, Rocket, Crown } from "lucide-react";
-import { useAuthStore } from "@/store/authStore";
+import { useIsAuthenticated } from "@/store/authStore";
 import apiClient from "@/lib/api/client";
 
 export default function PricingPage() {
   const router = useRouter();
-  const { isAuthenticated } = useAuthStore();
+  const isAuthenticated = useIsAuthenticated();
   const [billingPeriod, setBillingPeriod] = useState<"monthly" | "annually">(
     "monthly"
   );

@@ -2,16 +2,16 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useAuthStore } from "@/store/authStore";
+import { useIsAuthenticated } from "@/store/authStore";
 
 export default function SuccessPage() {
   const router = useRouter();
-  const { isAuthenticated } = useAuthStore();
+  const isAuthenticated = useIsAuthenticated();
 
   useEffect(() => {
     // Redirect to dashboard after a short delay
     const timer = setTimeout(() => {
-      if (isAuthenticated()) {
+      if (isAuthenticated) {
         router.push("/dashboard");
       } else {
         router.push("/signup");
