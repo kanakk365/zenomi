@@ -177,22 +177,22 @@ export default function DownloadReportPage() {
   return (
     <div className="min-h-screen w-full font-urbanist bg-white">
       <div className="bg-white border-b border-gray-200 print:hidden">
-        <div className="max-w-7xl mx-auto px-8 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
+          <div className="flex items-center gap-2 sm:gap-3">
             <Image
               src="/logo.png"
               alt="Zenomi"
-              width={40}
-              height={40}
-              className="object-contain"
+              width={32}
+              height={32}
+              className="sm:w-10 sm:h-10 object-contain"
             />
-            <h1 className="text-xl font-semibold text-gray-900">
+            <h1 className="text-base sm:text-lg lg:text-xl font-semibold text-gray-900">
               Zenomi – Wellness Report Summary
             </h1>
           </div>
           <button
             onClick={handlePrint}
-            className="px-6 py-2 rounded-full text-white font-semibold hover:opacity-90 transition-opacity cursor-pointer"
+            className="px-4 sm:px-6 py-1.5 sm:py-2 rounded-full text-white text-xs sm:text-sm font-semibold hover:opacity-90 transition-opacity cursor-pointer w-full sm:w-auto"
             style={{
               background: "linear-gradient(86deg, #704180 5%, #8B2D6C 96%)",
             }}
@@ -203,32 +203,32 @@ export default function DownloadReportPage() {
       </div>
 
       <div ref={contentRef}>
-        <div className="py-6">
-          <div className="max-w-7xl mx-auto px-8">
-            <div className="bg-[#8B2D6C] text-white px-6 py-3 rounded-t-lg">
-              <h2 className="text-lg font-semibold">Personal Details</h2>
+        <div className="py-4 sm:py-6">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="bg-[#8B2D6C] text-white px-4 sm:px-6 py-2 sm:py-3 rounded-t-lg">
+              <h2 className="text-base sm:text-lg font-semibold">Personal Details</h2>
             </div>
-            <div className="bg-white rounded-b-lg shadow-sm p-8">
-              <div className="flex justify-center gap-20">
+            <div className="bg-white rounded-b-lg shadow-sm p-4 sm:p-6 lg:p-8">
+              <div className="flex flex-col sm:flex-row justify-center gap-6 sm:gap-12 lg:gap-20">
                 <div className="flex flex-col items-center">
-                  <div className="text-sm font-semibold text-gray-500 mb-2">
+                  <div className="text-xs sm:text-sm font-semibold text-gray-500 mb-1 sm:mb-2">
                     Name
                   </div>
-                  <div className="text-lg font-semibold text-gray-900">
+                  <div className="text-base sm:text-lg font-semibold text-gray-900">
                     {childName}
                   </div>
                 </div>
                 <div className="flex flex-col items-center">
-                  <div className="text-sm font-semibold text-gray-500 mb-2">
+                  <div className="text-xs sm:text-sm font-semibold text-gray-500 mb-1 sm:mb-2">
                     Age
                   </div>
-                  <div className="text-lg font-semibold text-gray-900">{childAge}</div>
+                  <div className="text-base sm:text-lg font-semibold text-gray-900">{childAge}</div>
                 </div>
                 <div className="flex flex-col items-center">
-                  <div className="text-sm font-semibold text-gray-500 mb-2">
+                  <div className="text-xs sm:text-sm font-semibold text-gray-500 mb-1 sm:mb-2">
                     Created At
                   </div>
-                  <div className="text-lg font-semibold text-gray-900">
+                  <div className="text-base sm:text-lg font-semibold text-gray-900">
                     {childCreatedAt}
                   </div>
                 </div>
@@ -238,24 +238,24 @@ export default function DownloadReportPage() {
         </div>
 
         {optionsData && (
-          <div className="py-6">
-            <div className="max-w-7xl mx-auto px-8">
-              <div className="bg-[#8B2D6C] text-white px-6 py-3 rounded-t-lg">
-                <h2 className="text-lg font-semibold">{optionsData.statement}</h2>
+          <div className="py-4 sm:py-6">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="bg-[#8B2D6C] text-white px-4 sm:px-6 py-2 sm:py-3 rounded-t-lg">
+                <h2 className="text-base sm:text-lg font-semibold">{optionsData.statement}</h2>
               </div>
-              <div className="bg-white rounded-b-lg p-8">
-                <div className="mb-6">
-                  <h3 className="text-md font-semibold text-gray-700 mb-4">Selected Categories:</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div className="bg-white rounded-b-lg p-4 sm:p-6 lg:p-8">
+                <div className="mb-4 sm:mb-6">
+                  <h3 className="text-sm sm:text-base font-semibold text-gray-700 mb-3 sm:mb-4">Selected Categories:</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2 sm:gap-3">
                     {optionsData.options
                       .filter(option => option.selected)
                       .map((option) => (
                         <div
                           key={option.id}
-                          className="flex items-center gap-2 bg-[#F5F0F8] rounded-lg px-4 py-3"
+                          className="flex items-center gap-2 bg-[#F5F0F8] rounded-lg px-3 sm:px-4 py-2 sm:py-3"
                         >
                           <svg
-                            className="w-5 h-5 text-[#8B2D6C] shrink-0"
+                            className="w-4 h-4 sm:w-5 sm:h-5 text-[#8B2D6C] shrink-0"
                             fill="none"
                             strokeLinecap="round"
                             strokeLinejoin="round"
@@ -265,14 +265,14 @@ export default function DownloadReportPage() {
                           >
                             <path d="M5 13l4 4L19 7"></path>
                           </svg>
-                          <span className="text-sm text-gray-800">{option.label}</span>
+                          <span className="text-xs sm:text-sm text-gray-800">{option.label}</span>
                         </div>
                       ))}
                   </div>
                 </div>
 
                 {optionsData.analysis && (
-                  <div className="mt-6 border-t border-gray-200 pt-6">
+                  <div className="mt-4 sm:mt-6 border-t border-gray-200 pt-4 sm:pt-6">
                     {optionsData.analysis.split('\n\n').map((section, index) => {
                       const headingMatch = section.match(/\*\*(.+?)\*\*/);
                       const heading = headingMatch
@@ -285,15 +285,15 @@ export default function DownloadReportPage() {
                         : section.trim();
 
                       return (
-                        <div key={index} className={index > 0 ? 'mt-6' : ''}>
-                          <h3 className="text-[#7A3A78] italic font-semibold mb-3">
+                        <div key={index} className={index > 0 ? 'mt-4 sm:mt-6' : ''}>
+                          <h3 className="text-[#7A3A78] italic font-semibold text-sm sm:text-base mb-2 sm:mb-3">
                             {heading}
                           </h3>
-                          <div className="bg-[#F6E8F4] rounded-2xl px-6 py-5">
-                            <div className="flex gap-4 items-start">
-                              <div className="w-6 h-6 rounded-full bg-[#8B2D6C] flex items-center justify-center shrink-0">
+                          <div className="bg-[#F6E8F4] rounded-xl sm:rounded-2xl px-4 sm:px-6 py-3 sm:py-5">
+                            <div className="flex gap-3 sm:gap-4 items-start">
+                              <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-[#8B2D6C] flex items-center justify-center shrink-0">
                                 <svg
-                                  className="w-4 h-4 text-white"
+                                  className="w-3 h-3 sm:w-4 sm:h-4 text-white"
                                   fill="none"
                                   strokeLinecap="round"
                                   strokeLinejoin="round"
@@ -304,7 +304,7 @@ export default function DownloadReportPage() {
                                   <path d="M5 13l4 4L19 7"></path>
                                 </svg>
                               </div>
-                              <p className="text-sm text-gray-800 leading-relaxed whitespace-pre-line">
+                              <p className="text-xs sm:text-sm text-gray-800 leading-relaxed whitespace-pre-line">
                                 {body}
                               </p>
                             </div>
@@ -319,18 +319,18 @@ export default function DownloadReportPage() {
           </div>
         )}
 
-        <div className="max-w-7xl mx-auto px-8 py-6">
-          <div className="text-center mb-8">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-2">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
+          <div className="text-center mb-6 sm:mb-8">
+            <h2 className="text-xl sm:text-2xl font-semibold text-gray-900 mb-2">
               Your Personalized Wellness Report
             </h2>
-            <p className="text-gray-600">
+            <p className="text-sm sm:text-base text-gray-600">
               A snapshot of your mind, body, and habits
             </p>
           </div>
 
-          <div className="mb-12 bg-white rounded-lg p-8 flex justify-center">
-            <div style={{ width: "600px", height: "400px" }}>
+          <div className="mb-8 sm:mb-12 bg-white rounded-lg p-4 sm:p-6 lg:p-8 flex justify-center overflow-x-auto">
+            <div className="w-full max-w-full" style={{ minWidth: "300px", width: "100%", maxWidth: "600px", height: "300px" }}>
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart
                   data={chartData}
@@ -392,22 +392,22 @@ export default function DownloadReportPage() {
             </div>
           </div>
 
-          <div className="bg-[#8B2D6C] text-white px-6 py-3 rounded-t-lg">
-            <h2 className="text-lg font-semibold">Zenomi Wellness Insights</h2>
+          <div className="bg-[#8B2D6C] text-white px-4 sm:px-6 py-2 sm:py-3 rounded-t-lg">
+            <h2 className="text-base sm:text-lg font-semibold">Zenomi Wellness Insights</h2>
           </div>
 
-          <div className="mb-12">
-            <div className="bg-white rounded-b-lg shadow-sm overflow-hidden">
-              <table className="w-full">
+          <div className="mb-8 sm:mb-12">
+            <div className="bg-white rounded-b-lg shadow-sm overflow-hidden overflow-x-auto">
+              <table className="w-full min-w-[500px]">
                 <thead className="bg-gray-100">
                   <tr>
-                    <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">
+                    <th className="px-3 sm:px-6 py-2 sm:py-3 text-left text-xs sm:text-sm font-semibold text-gray-700">
                       Test
                     </th>
-                    <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">
+                    <th className="px-3 sm:px-6 py-2 sm:py-3 text-left text-xs sm:text-sm font-semibold text-gray-700">
                       Score
                     </th>
-                    <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">
+                    <th className="px-3 sm:px-6 py-2 sm:py-3 text-left text-xs sm:text-sm font-semibold text-gray-700">
                       Status
                     </th>
                   </tr>
@@ -418,15 +418,15 @@ export default function DownloadReportPage() {
                       key={result.surveyId}
                       className={index > 0 ? "border-t border-gray-200" : ""}
                     >
-                      <td className="px-6 py-4 text-sm text-gray-900">
+                      <td className="px-3 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm text-gray-900">
                         {result.surveyName}
                       </td>
-                      <td className="px-6 py-4 text-sm text-gray-900">
+                      <td className="px-3 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm text-gray-900">
                         {result.totalScore > 0
                           ? result.totalScore
                           : "-"}
                       </td>
-                      <td className="px-6 py-4 text-sm text-gray-900">
+                      <td className="px-3 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm text-gray-900">
                         {result.band}
                       </td>
                     </tr>
@@ -437,20 +437,20 @@ export default function DownloadReportPage() {
           </div>
 
           {surveysWithDetails.map((survey) => (
-            <div key={survey.surveyId} className="mb-12">
-              <div className="bg-[#F5F0F8] rounded-lg p-6">
-                <h3 className="text-lg font-semibold text-[#8B2D6C] mb-4 italic">
+            <div key={survey.surveyId} className="mb-8 sm:mb-12">
+              <div className="bg-[#F5F0F8] rounded-lg p-4 sm:p-6">
+                <h3 className="text-base sm:text-lg font-semibold text-[#8B2D6C] mb-3 sm:mb-4 italic">
                   {survey.surveyName} - {survey.totalScore}
                 </h3>
 
-                <div className="bg-white rounded-lg overflow-hidden shadow-sm">
-                  <table className="w-full">
+                <div className="bg-white rounded-lg overflow-hidden shadow-sm overflow-x-auto">
+                  <table className="w-full min-w-[500px]">
                     <thead className="bg-[#F5E6F0]">
                       <tr>
-                        <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">
+                        <th className="px-3 sm:px-6 py-2 sm:py-3 text-left text-xs sm:text-sm font-semibold text-gray-900">
                           Question
                         </th>
-                        <th className="px-6 py-3 text-left text-sm font-semibold text-gray-900">
+                        <th className="px-3 sm:px-6 py-2 sm:py-3 text-left text-xs sm:text-sm font-semibold text-gray-900">
                           Answer
                         </th>
                       </tr>
@@ -468,10 +468,10 @@ export default function DownloadReportPage() {
                               index > 0 ? "border-t border-gray-200" : ""
                             }
                           >
-                            <td className="px-6 py-4 text-sm text-gray-900">
+                            <td className="px-3 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm text-gray-900">
                               {answer.statement}
                             </td>
-                            <td className="px-6 py-4 text-sm text-gray-900">
+                            <td className="px-3 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm text-gray-900">
                               {answer.textAnswer ||
                                 (answer.label && answer.value
                                   ? `${answer.label} (${answer.value}/5)`

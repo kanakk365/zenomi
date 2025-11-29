@@ -194,19 +194,19 @@ export default function FlowPage() {
         />
       </div>
 
-      <div className="relative z-10 h-full flex">
+      <div className="relative z-10 h-full flex flex-col lg:flex-row">
         {/* Left side - Welcome section */}
-        <div className="w-1/2 flex flex-col items-center justify-center p-12">
-          <div className="text-center mb-8">
-            <h1 className="text-white text-4xl font-bold mb-2">
+        <div className="hidden lg:flex w-full lg:w-1/2 flex-col items-center justify-center p-8 lg:p-12">
+          <div className="text-center mb-6 lg:mb-8">
+            <h1 className="text-white text-3xl lg:text-4xl font-bold mb-2">
               Welcome to <span className="font-bold">ZenAI</span>
             </h1>
-            <p className="text-white/80 text-sm uppercase tracking-wider">
+            <p className="text-white/80 text-xs sm:text-sm uppercase tracking-wider">
               PARENTAL PORTAL
             </p>
           </div>
 
-          <div className="mb-8">
+          <div className="mb-6 lg:mb-8">
             <Image
               src="/zenaiParents.svg"
               alt="Family illustration"
@@ -216,19 +216,19 @@ export default function FlowPage() {
             />
           </div>
 
-          <div className="bg-white/10 backdrop-blur-sm rounded-2xl px-6 py-4 max-w-sm">
-            <p className="text-white text-center text-sm">
-              Understanding your teen's world helps you guide them with greater clarity and confidence!
+          <div className="bg-white/10 backdrop-blur-sm rounded-2xl px-4 lg:px-6 py-3 lg:py-4 max-w-sm">
+            <p className="text-white text-center text-xs sm:text-sm">
+              Understanding your teen&apos;s world helps you guide them with greater clarity and confidence!
             </p>
           </div>
         </div>
 
         {/* Right side - Chat section */}
-        <div className="w-1/2 flex items-center justify-center p-12">
-          <div className="bg-white/95 backdrop-blur-sm rounded-3xl shadow-2xl w-full max-w-2xl h-[85vh] max-h-[850px] flex flex-col overflow-hidden">
+        <div className="w-full lg:w-1/2 flex items-center justify-center p-4 sm:p-6 lg:p-12">
+          <div className="bg-white/95 backdrop-blur-sm rounded-2xl sm:rounded-3xl shadow-2xl w-full max-w-2xl h-[90vh] sm:h-[85vh] max-h-[850px] flex flex-col overflow-hidden">
             {/* Bot header */}
-            <div className="flex items-center gap-3 px-8 py-6 bg-[#f7f0f5]">
-              <div className="w-12 h-12 rounded-full bg-[#8B2D6C] flex items-center justify-center">
+            <div className="flex items-center gap-2 sm:gap-3 px-4 sm:px-6 lg:px-8 py-4 sm:py-6 bg-[#f7f0f5]">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#8B2D6C] flex items-center justify-center shrink-0">
                 <Image
                   src="/purplebot.svg"
                   alt="Zenai"
@@ -238,16 +238,16 @@ export default function FlowPage() {
                 />
               </div>
               <div>
-                <h3 className="font-semibold text-gray-900">Zenai</h3>
+                <h3 className="font-semibold text-sm sm:text-base text-gray-900">Zenai</h3>
                 <p className="text-xs text-green-500">Online</p>
               </div>
             </div>
 
             {/* Chat messages */}
-            <div className="flex-1 px-8 pt-6 pb-6 overflow-y-auto">
-              <div className="space-y-4 flex flex-col min-h-full justify-end">
-              <div className="flex gap-3">
-                <div className="w-10 h-10 rounded-full bg-[#8B2D6C] flex items-center justify-center shrink-0">
+            <div className="flex-1 px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6 pb-4 sm:pb-6 overflow-y-auto">
+              <div className="space-y-3 sm:space-y-4 flex flex-col min-h-full justify-end">
+              <div className="flex gap-2 sm:gap-3">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[#8B2D6C] flex items-center justify-center shrink-0">
                   <Image
                     src="/purplebot.svg"
                     alt="Bot"
@@ -256,13 +256,13 @@ export default function FlowPage() {
                     className="object-contain"
                   />
                 </div>
-                <div className="bg-[#F5F0F8] rounded-tl-none rounded-tr-2xl rounded-br-2xl rounded-bl-2xl px-5 py-4 flex-1">
-                  <p className="text-gray-800 text-sm">{currentStep.intro}</p>
+                <div className="bg-[#F5F0F8] rounded-tl-none rounded-tr-2xl rounded-br-2xl rounded-bl-2xl px-3 sm:px-4 lg:px-5 py-3 sm:py-4 flex-1">
+                  <p className="text-gray-800 text-xs sm:text-sm">{currentStep.intro}</p>
                 </div>
               </div>
 
-              <div className="flex gap-3 ">
-                <div className="w-10 h-10 rounded-full bg-[#8B2D6C] flex items-center justify-center shrink-0">
+              <div className="flex gap-2 sm:gap-3">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[#8B2D6C] flex items-center justify-center shrink-0">
                   <Image
                     src="/purplebot.svg"
                     alt="Bot"
@@ -271,28 +271,28 @@ export default function FlowPage() {
                     className="object-contain"
                   />
                 </div>
-                <div className="bg-[#F5F0F8] rounded-tl-none rounded-tr-2xl rounded-br-2xl rounded-bl-2xl px-5 py-4 flex-1">
-                  <p className="text-gray-800 text-sm font-medium mb-4">
+                <div className="bg-[#F5F0F8] rounded-tl-none rounded-tr-2xl rounded-br-2xl rounded-bl-2xl px-3 sm:px-4 lg:px-5 py-3 sm:py-4 flex-1">
+                  <p className="text-gray-800 text-xs sm:text-sm font-medium mb-3 sm:mb-4">
                     {currentStep.question}
                   </p>
 
                   {/* Options */}
-                  <div className="space-y-3">
+                  <div className="space-y-2.5 sm:space-y-3">
                     {currentStep.options.map((option) => (
                       <label
                         key={option.id}
-                        className="flex items-center gap-3 cursor-pointer group"
+                        className="flex items-center gap-2 sm:gap-3 cursor-pointer group"
                       >
-                        <div className="relative flex items-center">
+                        <div className="relative flex items-center shrink-0">
                           <input
                             type="checkbox"
                             checked={selectedOptions.includes(option.id)}
                             onChange={() => handleOptionToggle(option.id)}
-                            className="w-5 h-5 rounded-full border-2 border-[#8B2D6C] appearance-none cursor-pointer checked:bg-[#8B2D6C] checked:border-[#8B2D6C] transition-all"
+                            className="w-4 h-4 sm:w-5 sm:h-5 rounded-full border-2 border-[#8B2D6C] appearance-none cursor-pointer checked:bg-[#8B2D6C] checked:border-[#8B2D6C] transition-all"
                           />
                           {selectedOptions.includes(option.id) && (
                             <svg
-                              className="absolute left-1 top-1 w-3 h-3 text-white pointer-events-none"
+                              className="absolute left-0.5 sm:left-1 top-0.5 sm:top-1 w-2.5 h-2.5 sm:w-3 sm:h-3 text-white pointer-events-none"
                               fill="none"
                               strokeLinecap="round"
                               strokeLinejoin="round"
@@ -304,7 +304,7 @@ export default function FlowPage() {
                             </svg>
                           )}
                         </div>
-                        <span className="text-sm text-gray-700 group-hover:text-[#8B2D6C] transition-colors">
+                        <span className="text-xs sm:text-sm text-gray-700 group-hover:text-[#8B2D6C] transition-colors break-words">
                           {option.label}
                         </span>
                       </label>
@@ -314,9 +314,9 @@ export default function FlowPage() {
               </div>
 
               {userMessages.length > 0 && (
-                <div className="flex justify-end mt-4">
-                  <div className="bg-[#8B2D6C] rounded-tl-2xl rounded-tr-none rounded-br-2xl rounded-bl-2xl px-5 py-4 max-w-[80%]">
-                    <ul className="text-white text-sm space-y-1">
+                <div className="flex justify-end mt-3 sm:mt-4">
+                  <div className="bg-[#8B2D6C] rounded-tl-2xl rounded-tr-none rounded-br-2xl rounded-bl-2xl px-3 sm:px-4 lg:px-5 py-3 sm:py-4 max-w-[85%] sm:max-w-[80%]">
+                    <ul className="text-white text-xs sm:text-sm space-y-1">
                       {userMessages.map((message, index) => (
                         <li key={index}>• {message}</li>
                       ))}
@@ -326,8 +326,8 @@ export default function FlowPage() {
               )}
 
               {showReportButton && (
-                <div className="flex gap-3 mt-4">
-                  <div className="w-10 h-10 rounded-full bg-[#8B2D6C] flex items-center justify-center shrink-0">
+                <div className="flex gap-2 sm:gap-3 mt-3 sm:mt-4">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[#8B2D6C] flex items-center justify-center shrink-0">
                     <Image
                       src="/purplebot.svg"
                       alt="Bot"
@@ -336,14 +336,14 @@ export default function FlowPage() {
                       className="object-contain"
                     />
                   </div>
-                  <div className="bg-[#F5F0F8] rounded-tl-none rounded-tr-2xl rounded-br-2xl rounded-bl-2xl px-5 py-4 flex-1">
-                    <p className="text-gray-800 text-sm mb-4">
+                  <div className="bg-[#F5F0F8] rounded-tl-none rounded-tr-2xl rounded-br-2xl rounded-bl-2xl px-3 sm:px-4 lg:px-5 py-3 sm:py-4 flex-1">
+                    <p className="text-gray-800 text-xs sm:text-sm mb-3 sm:mb-4">
                       Great! Your responses have been submitted successfully.
                       Click below to view your personalized report.
                     </p>
                     <button
                       onClick={() => router.push("/reports")}
-                      className="px-6 py-2 rounded-full text-white font-medium hover:opacity-90 transition-opacity cursor-pointer"
+                      className="px-4 sm:px-6 py-1.5 sm:py-2 rounded-full text-white text-xs sm:text-sm font-medium hover:opacity-90 transition-opacity cursor-pointer"
                       style={{
                         background:
                           "linear-gradient(180deg, #8B2D6C 0%, #704180 100%)",
@@ -358,17 +358,17 @@ export default function FlowPage() {
             </div>
 
             {/* Input area */}
-            <div className="flex items-center mt-8 gap-3 px-8 pb-6">
+            <div className="flex items-center mt-4 sm:mt-6 lg:mt-8 gap-2 sm:gap-3 px-4 sm:px-6 lg:px-8 pb-4 sm:pb-6">
               <input
                 type="text"
                 placeholder="Hi Parent type your answer here!!"
                 disabled
-                className="flex-1 px-4 py-3 rounded-full bg-[#f1f1f1] text-gray-400 text-sm focus:outline-none"
+                className="flex-1 px-3 sm:px-4 py-2.5 sm:py-3 rounded-full bg-[#f1f1f1] text-gray-400 text-xs sm:text-sm focus:outline-none"
               />
               <button
                 onClick={handleSubmit}
                 disabled={selectedOptions.length === 0 || isSubmitting}
-                className="w-12 h-12 rounded-full flex items-center justify-center transition-opacity disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                className="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-opacity disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer shrink-0"
                 style={{
                   background:
                     "linear-gradient(180deg, #8B2D6C 0%, #704180 100%)",
@@ -376,7 +376,7 @@ export default function FlowPage() {
               >
                 {isSubmitting ? (
                   <svg
-                    className="w-5 h-5 text-white animate-spin"
+                    className="w-4 h-4 sm:w-5 sm:h-5 text-white animate-spin"
                     fill="none"
                     viewBox="0 0 24 24"
                   >
@@ -396,7 +396,7 @@ export default function FlowPage() {
                   </svg>
                 ) : (
                   <svg
-                    className="w-5 h-5 text-white"
+                    className="w-4 h-4 sm:w-5 sm:h-5 text-white"
                     fill="none"
                     strokeLinecap="round"
                     strokeLinejoin="round"

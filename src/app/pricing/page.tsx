@@ -103,30 +103,30 @@ export default function PricingPage() {
         />
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 py-10">
-        <div className="mb-8">
-          <div className="flex items-center gap-4 mb-3">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8 lg:py-10">
+        <div className="mb-6 sm:mb-8">
+          <div className="flex items-center gap-2 sm:gap-4 mb-2 sm:mb-3">
             <button
               onClick={() => router.back()}
-              className="text-gray-900 hover:text-[#8B2D6C] transition-colors"
+              className="text-gray-900 hover:text-[#8B2D6C] transition-colors shrink-0"
             >
-              <ArrowLeft className="w-6 h-6" />
+              <ArrowLeft className="w-5 h-5 sm:w-6 sm:h-6" />
             </button>
-            <h1 className="text-3xl font-bold text-gray-900">
+            <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900">
               Choose the Best Plan for Your Child
             </h1>
           </div>
-          <p className="text-gray-600 text-lg">
+          <p className="text-gray-600 text-sm sm:text-base lg:text-lg ml-7 sm:ml-10">
             Unlock personalized insights, detailed reports, and expert guidance
             tailored to your child&apos;s needs.
           </p>
         </div>
 
-        <div className="flex justify-center mb-12">
-          <div className="inline-flex bg-white rounded-full p-1 shadow-sm">
+        <div className="flex justify-center mb-8 sm:mb-10 lg:mb-12">
+          <div className="inline-flex bg-white rounded-full p-0.5 sm:p-1 shadow-sm">
             <button
               onClick={() => setBillingPeriod("monthly")}
-              className={`px-6 py-2 rounded-full font-medium transition-all ${
+              className={`px-4 sm:px-6 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all ${
                 billingPeriod === "monthly"
                   ? "bg-[#8B2D6C] text-white"
                   : "text-[#8B2D6C] hover:bg-gray-50"
@@ -136,7 +136,7 @@ export default function PricingPage() {
             </button>
             <button
               onClick={() => setBillingPeriod("annually")}
-              className={`px-6 py-2 rounded-full font-medium transition-all ${
+              className={`px-4 sm:px-6 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all ${
                 billingPeriod === "annually"
                   ? "bg-[#8B2D6C] text-white"
                   : "text-[#8B2D6C] hover:bg-gray-50"
@@ -147,7 +147,7 @@ export default function PricingPage() {
           </div>
         </div>
 
-        <div className="flex flex-row gap-8 max-w-4xl mx-auto justify-center">
+        <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 lg:gap-8 max-w-4xl mx-auto justify-center">
           {plans.map((plan) => {
             const Icon = plan.icon;
             const price = plan.price[billingPeriod];
@@ -155,50 +155,50 @@ export default function PricingPage() {
             return (
               <div
                 key={plan.id}
-                className="relative bg-white rounded-[32px] border border-[#CECECE] flex flex-col w-[380px] max-w-[380px] p-6 gap-8 shadow-[0px_4px_20px_0px_rgba(0,0,0,0.25)] transition-all duration-300 hover:bg-[linear-gradient(180deg,#704180_0%,#8B2D6C_100%)] group"
+                className="relative bg-white rounded-2xl sm:rounded-[32px] border border-[#CECECE] flex flex-col w-full sm:w-[380px] sm:max-w-[380px] p-4 sm:p-6 gap-6 sm:gap-8 shadow-[0px_4px_20px_0px_rgba(0,0,0,0.25)] transition-all duration-300 hover:bg-[linear-gradient(180deg,#704180_0%,#8B2D6C_100%)] group"
               >
-                <div className="flex flex-col gap-6">
-                  <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-4 sm:gap-6">
+                  <div className="flex flex-col gap-3 sm:gap-4">
                     <div className="flex justify-between items-center">
-                      <div className="w-[52px] h-[52px] rounded-lg flex items-center justify-center border border-[#E6E6E6] bg-[linear-gradient(140deg,#704180_0%,transparent_100%)] shadow-[inset_0px_-2px_3px_0px_rgba(139,45,108,0.2),inset_0px_1px_1px_0px_rgba(255,255,255,0.15)]">
-                        <Icon className="w-6 h-6 text-[#8B2D6C] group-hover:text-white transition-colors duration-300" />
+                      <div className="w-[44px] h-[44px] sm:w-[52px] sm:h-[52px] rounded-lg flex items-center justify-center border border-[#E6E6E6] bg-[linear-gradient(140deg,#704180_0%,transparent_100%)] shadow-[inset_0px_-2px_3px_0px_rgba(139,45,108,0.2),inset_0px_1px_1px_0px_rgba(255,255,255,0.15)]">
+                        <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-[#8B2D6C] group-hover:text-white transition-colors duration-300" />
                       </div>
 
                       {plan.savePercent && (
-                        <div className="px-3 py-2.5 rounded-full text-xs font-medium text-black bg-linear-to-b from-[#F7C569] to-[#FBBC05] group-hover:bg-white group-hover:text-[#8B2D6C] transition-all duration-300">
+                        <div className="px-2.5 sm:px-3 py-2 sm:py-2.5 rounded-full text-xs font-medium text-black bg-linear-to-b from-[#F7C569] to-[#FBBC05] group-hover:bg-white group-hover:text-[#8B2D6C] transition-all duration-300">
                           Save {plan.savePercent}%
                         </div>
                       )}
                     </div>
 
-                    <div className="flex flex-col gap-3">
-                      <h3 className="text-xl font-semibold text-black leading-[1.15em] group-hover:text-white transition-colors duration-300">
+                    <div className="flex flex-col gap-2 sm:gap-3">
+                      <h3 className="text-lg sm:text-xl font-semibold text-black leading-[1.15em] group-hover:text-white transition-colors duration-300">
                         {plan.name}
                       </h3>
-                      <p className="text-base font-normal text-[#4E4E4E] leading-[1.4em] group-hover:text-white transition-colors duration-300">
+                      <p className="text-sm sm:text-base font-normal text-[#4E4E4E] leading-[1.4em] group-hover:text-white transition-colors duration-300">
                         {plan.description}
                       </p>
                     </div>
                   </div>
 
                   <div className="flex items-end gap-0.5">
-                    <span className="text-[40px] font-semibold text-black leading-[1.15em] group-hover:text-white transition-colors duration-300">
+                    <span className="text-3xl sm:text-[40px] font-semibold text-black leading-[1.15em] group-hover:text-white transition-colors duration-300">
                       {price}
                     </span>
                     {price !== "Free" && (
-                      <span className="text-sm font-normal text-[#6A6A6A] leading-[1.15em] mb-1 group-hover:text-white transition-colors duration-300">
+                      <span className="text-xs sm:text-sm font-normal text-[#6A6A6A] leading-[1.15em] mb-1 group-hover:text-white transition-colors duration-300">
                         /month
                       </span>
                     )}
                   </div>
                 </div>
 
-                <div className="flex flex-col gap-6">
-                  <ul className="flex flex-col gap-2.5">
+                <div className="flex flex-col gap-4 sm:gap-6">
+                  <ul className="flex flex-col gap-2 sm:gap-2.5">
                     {plan.features.map((feature, index) => (
-                      <li key={index} className="flex items-center gap-2">
-                        <Check className="w-6 h-6 text-[#8B2D6C] shrink-0 group-hover:text-white transition-colors duration-300" />
-                        <span className="text-sm font-normal text-[#2C2C2C] leading-[1.15em] group-hover:text-white transition-colors duration-300">
+                      <li key={index} className="flex items-start gap-2">
+                        <Check className="w-5 h-5 sm:w-6 sm:h-6 text-[#8B2D6C] shrink-0 group-hover:text-white transition-colors duration-300 mt-0.5" />
+                        <span className="text-xs sm:text-sm font-normal text-[#2C2C2C] leading-[1.15em] group-hover:text-white transition-colors duration-300">
                           {feature}
                         </span>
                       </li>
@@ -208,7 +208,7 @@ export default function PricingPage() {
                   <button
                     onClick={() => handleCheckout(plan)}
                     disabled={loadingPlanId === plan.id}
-                    className="w-full py-2 px-[18px] rounded-xl font-semibold text-base text-white transition-all duration-300 hover:opacity-90 cursor-pointer bg-linear-to-r from-[#8B2D6C] to-[#704180] border border-[#514F6E] shadow-[0px_3px_6px_0px_rgba(7,0,110,0.03),inset_0px_-2px_2px_0px_rgba(10,16,50,0.07)] group-hover:bg-[#a76594] group-hover:border-[#a76594] disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full py-2 sm:py-2 px-4 sm:px-[18px] rounded-xl font-semibold text-sm sm:text-base text-white transition-all duration-300 hover:opacity-90 cursor-pointer bg-linear-to-r from-[#8B2D6C] to-[#704180] border border-[#514F6E] shadow-[0px_3px_6px_0px_rgba(7,0,110,0.03),inset_0px_-2px_2px_0px_rgba(10,16,50,0.07)] group-hover:bg-[#a76594] group-hover:border-[#a76594] disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {loadingPlanId === plan.id ? "Processing..." : plan.buttonText}
                   </button>

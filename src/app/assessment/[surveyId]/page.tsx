@@ -205,26 +205,26 @@ export default function AssessmentPage() {
         />
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 py-8">
-        <div className="flex justify-between items-start mb-6">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-6 lg:py-8">
+        <div className="flex justify-between items-start mb-4 sm:mb-6">
           <div className="text-left">
             <button
               onClick={() => router.push("/surveys")}
-              className="flex items-center gap-2 text-[#8B2D6C] hover:opacity-80 transition-opacity mb-2 cursor-pointer"
+              className="flex items-center gap-1.5 sm:gap-2 text-[#8B2D6C] hover:opacity-80 transition-opacity mb-2 cursor-pointer"
             >
-              <ArrowLeft className="w-5 h-5" />
-              <span className="font-semibold text-xl">
+              <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5" />
+              <span className="font-semibold text-base sm:text-lg lg:text-xl">
                 {surveyData.surveyName}
               </span>
             </button>
-            <p className="text-gray-600 text-sm ml-7">
+            <p className="text-gray-600 text-xs sm:text-sm ml-5 sm:ml-7">
               Understand how well your teen feels around you and also make them feel better.
             </p>
           </div>
         </div>
 
-        <div className="mb-8 flex gap-3 items-end max-w-md">
-        <div className=" size-10 rounded-full bg-[#8B2D6C] flex items-center justify-center">
+        <div className="mb-6 sm:mb-8 flex gap-2 sm:gap-3 items-end max-w-md">
+        <div className="size-8 sm:size-10 rounded-full bg-[#8B2D6C] flex items-center justify-center shrink-0">
                 <Image
                   src="/purplebot.svg"
                   alt="Bot"
@@ -233,17 +233,17 @@ export default function AssessmentPage() {
                   className="object-contain"
                 />
               </div>
-          <div className="bg-[#ede8f2] text-black rounded-tl-xl rounded-tr-xl rounded-br-xl px-4 py-3">
-            <p className="text-[#704180] font-medium text-sm">
+          <div className="bg-[#ede8f2] text-black rounded-tl-xl rounded-tr-xl rounded-br-xl px-3 sm:px-4 py-2 sm:py-3">
+            <p className="text-[#704180] font-medium text-xs sm:text-sm">
               Start with assessments to get to know your teen better...
             </p>
           </div>
         </div>
 
-        <div className="grid grid-cols-12 gap-6">
-            <div className="col-span-4">
+        <div className="grid grid-cols-12 gap-4 sm:gap-6">
+            <div className="hidden lg:block col-span-4">
               <div
-                className="rounded-3xl p-8 h-full min-h-[500px] flex flex-col items-center justify-center relative"
+                className="rounded-3xl p-6 lg:p-8 h-full min-h-[500px] flex flex-col items-center justify-center relative"
                 style={{
                   background:
                     "linear-gradient(180deg, rgba(112, 65, 128, 0.63) 0%, rgba(139, 45, 108, 0.63) 100%)",
@@ -262,15 +262,13 @@ export default function AssessmentPage() {
                 <br />
                 let&apos;s understand theirs.
               </p>
-
-             
             </div>
           </div>
 
-          <div className="col-span-8">
-            <div className="bg-[#FDFBFF] rounded-3xl p-8 px-40 flex flex-col min-h-[500px]">
-              <div className="mb-6">
-                <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
+          <div className="col-span-12 lg:col-span-8">
+            <div className="bg-[#FDFBFF] rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 lg:px-40 flex flex-col min-h-[400px] sm:min-h-[500px]">
+              <div className="mb-4 sm:mb-6">
+                <div className="w-full h-1.5 sm:h-2 bg-gray-200 rounded-full overflow-hidden">
                   <div
                     className="h-full transition-all duration-300"
                     style={{
@@ -279,26 +277,26 @@ export default function AssessmentPage() {
                     }}
                   />
                 </div>
-                <p className="text-center text-sm text-gray-600 mt-2">
+                <p className="text-center text-xs sm:text-sm text-gray-600 mt-2">
                   Question {String(currentQuestionIndex + 1).padStart(2, "0")}/
                   {String(totalQuestions).padStart(2, "0")}
                 </p>
               </div>
 
               <div className="flex-1 flex flex-col items-center">
-                <h2 className="text-xl font-semibold text-gray-900 mb-8 text-center">
+                <h2 className="text-base sm:text-lg lg:text-xl font-semibold text-gray-900 mb-6 sm:mb-8 text-center px-2">
                   {currentQuestion.statement}
                 </h2>
 
                 {currentQuestion.questionType === "LIKERT" &&
                   currentQuestion.likertScaleOptions && (
-                    <div className="space-y-3 w-full flex items-center justify-center">
-                      <div className="space-y-3 w-full max-w-md flex flex-col items-center justify-center ">
+                    <div className="space-y-2.5 sm:space-y-3 w-full flex items-center justify-center">
+                      <div className="space-y-2.5 sm:space-y-3 w-full max-w-md flex flex-col items-center justify-center">
                         {currentQuestion.likertScaleOptions.map((option) => (
                           <button
                             key={option.value}
                             onClick={() => handleOptionSelect(option.value)}
-                            className={`w-72 px-6 py-3 cursor-pointer rounded-full text-sm font-medium transition-all ${
+                            className={`w-full sm:w-72 px-4 sm:px-6 py-2.5 sm:py-3 cursor-pointer rounded-full text-xs sm:text-sm font-medium transition-all ${
                               selectedOption === option.value
                                 ? "text-white shadow-md"
                                 : "bg-white border border-[#D8B4E2] text-gray-700 shadow-sm hover:border-[#9B59B6]"
@@ -325,19 +323,19 @@ export default function AssessmentPage() {
                       value={openEndedAnswer}
                       onChange={(e) => handleOpenEndedChange(e.target.value)}
                       placeholder="Type your answer here..."
-                      className="w-full max-w-md h-40 px-4 py-3 border border-[#D8B4E2] rounded-2xl resize-none focus:outline-none focus:border-[#9B59B6] text-gray-700 bg-white shadow-sm"
+                      className="w-full max-w-md h-32 sm:h-40 px-3 sm:px-4 py-2.5 sm:py-3 border border-[#D8B4E2] rounded-xl sm:rounded-2xl resize-none focus:outline-none focus:border-[#9B59B6] text-gray-700 bg-white shadow-sm text-sm sm:text-base"
                     />
                   </div>
                 )}
               </div>
 
-              <div className="flex justify-center items-center gap-4 mt-8 pt-6 ">
+              <div className="flex justify-center items-center gap-3 sm:gap-4 mt-6 sm:mt-8 pt-4 sm:pt-6">
                 <button
                   onClick={handlePrevious}
                   disabled={currentQuestionIndex === 0}
-                  className="flex items-center gap-2 px-6 py-2 rounded-full bg-white border border-[#D8B4E2] text-gray-700 hover:border-[#9B59B6] transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer shadow-sm"
+                  className="flex items-center gap-1.5 sm:gap-2 px-4 sm:px-6 py-2 rounded-full bg-white border border-[#D8B4E2] text-gray-700 hover:border-[#9B59B6] transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer shadow-sm text-xs sm:text-sm"
                 >
-                  <ArrowLeft className="w-4 h-4" />
+                  <ArrowLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                   Previous
                 </button>
 
@@ -345,19 +343,19 @@ export default function AssessmentPage() {
                   <button
                     onClick={handleNext}
                     disabled={!canProceed}
-                    className="flex items-center gap-2 px-6 py-2 rounded-full bg-white border border-[#D8B4E2] text-gray-700 hover:border-[#9B59B6] transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer shadow-sm"
+                    className="flex items-center gap-1.5 sm:gap-2 px-4 sm:px-6 py-2 rounded-full bg-white border border-[#D8B4E2] text-gray-700 hover:border-[#9B59B6] transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer shadow-sm text-xs sm:text-sm"
                   >
                     Next
-                    <ArrowRight className="w-4 h-4" />
+                    <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                   </button>
                 ) : (
                   <button
                     onClick={handleComplete}
                     disabled={!canProceed}
-                    className="flex items-center gap-2 px-6 py-2 rounded-full bg-white border border-[#D8B4E2] text-gray-700 hover:border-[#9B59B6] transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer shadow-sm"
+                    className="flex items-center gap-1.5 sm:gap-2 px-4 sm:px-6 py-2 rounded-full bg-white border border-[#D8B4E2] text-gray-700 hover:border-[#9B59B6] transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer shadow-sm text-xs sm:text-sm"
                   >
                     Complete
-                    <ArrowRight className="w-4 h-4" />
+                    <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                   </button>
                 )}
               </div>

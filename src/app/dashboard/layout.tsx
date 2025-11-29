@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, useEffect } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import {
   LayoutDashboard,
@@ -40,12 +40,18 @@ export default function DashboardLayout({
   const pathname = usePathname();
   const { logout, user } = useAuthStore();
   const authenticated = useIsAuthenticated();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     if (!authenticated) {
       router.push("/signup");
     }
   }, [authenticated, router]);
+
+  useEffect(() => {
+    // Close mobile menu when route changes
+    setIsMobileMenuOpen(false);
+  }, [pathname]);
 
   const handleLogout = () => {
     logout();
@@ -72,6 +78,8 @@ export default function DashboardLayout({
         secondaryNav={secondaryNav}
         pathname={pathname}
         onLogout={handleLogout}
+        isMobileOpen={isMobileMenuOpen}
+        onMobileClose={() => setIsMobileMenuOpen(false)}
       />
 
       <div className="flex flex-1 flex-col overflow-hidden">
@@ -81,9 +89,10 @@ export default function DashboardLayout({
           initials={initials}
           userName={user?.name}
           onDashboardClick={() => router.push("/dashboard")}
+          onMenuClick={() => setIsMobileMenuOpen(true)}
         />
 
-        <main className="flex-1 overflow-y-auto bg-[linear-gradient(180deg,#F7F3FF_0%,#F1E8FF_100%)] px-6 py-10">
+        <main className="flex-1 overflow-y-auto bg-[linear-gradient(180deg,#F7F3FF_0%,#F1E8FF_100%)] px-4 sm:px-6 py-6 sm:py-10">
           <div className="mx-auto w-full max-w-6xl">{children}</div>
         </main>
       </div>

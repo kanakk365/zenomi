@@ -338,7 +338,7 @@ export default function WelcomePage() {
   };
 
   return (
-    <div className="flex h-screen w-full font-urbanist relative">
+    <div className="flex h-screen w-full font-urbanist relative overflow-hidden">
       <div
         className="absolute inset-0"
         style={{
@@ -358,8 +358,8 @@ export default function WelcomePage() {
       </div>
 
       <div className="relative z-10 flex w-full h-full rounded-xl flex-col lg:flex-row">
-        <div className="w-full lg:w-[40%] rounded-2xl flex items-center justify-center px-4 sm:px-6 lg:px-8 py-6 lg:py-0">
-          <div className="w-full max-w-xl rounded-xl p-6 sm:p-8 lg:p-12 bg-[#d8bacf] relative shadow-lg flex flex-col">
+        <div className="hidden lg:flex w-full lg:w-[40%] rounded-2xl items-center justify-center px-3 sm:px-4 lg:px-8 py-4 sm:py-6 lg:py-0 shrink-0">
+          <div className="w-full max-w-xl rounded-xl p-4 sm:p-6 lg:p-12 bg-[#d8bacf] relative shadow-lg flex flex-col">
             <div className="absolute inset-0 z-0 rounded-xl">
               <Image
                 src="/rightboxbg.jpg"
@@ -369,9 +369,9 @@ export default function WelcomePage() {
               />
             </div>
 
-            <div className="relative z-10 flex flex-col flex-1">
+            <div className="relative z-10 flex flex-col flex-1 gap-3 sm:gap-4">
               <div className="text-center">
-                <h1 className="text-2xl sm:text-3xl text-black mb-2">
+                <h1 className="text-xl sm:text-2xl lg:text-3xl text-black mb-1 sm:mb-2">
                   Welcome to{" "}
                   <span className="text-[#704180] font-semibold ">ZenAI</span>
                 </h1>
@@ -380,7 +380,7 @@ export default function WelcomePage() {
                 </p>
               </div>
 
-              <div className="relative h-64 sm:h-72 mx-auto w-52 sm:w-60 my-6 sm:my-auto">
+              <div className="relative h-48 sm:h-64 lg:h-72 mx-auto w-40 sm:w-52 lg:w-60 my-2 sm:my-4 lg:my-auto">
                 <Image
                   src="/family.png"
                   alt="Family"
@@ -391,32 +391,32 @@ export default function WelcomePage() {
               </div>
 
               <div
-                className="rounded-xl p-4 sm:p-6 py-3 text-white"
+                className="rounded-xl p-3 sm:p-4 lg:p-6 py-2 sm:py-3 text-white"
                 style={{
                   background:
                     "linear-gradient(90deg, #8B2D6C 0%, #704180 100%)",
                 }}
               >
-                <p className="text-sm sm:text-base leading-relaxed">
-                  Understanding your teen's world helps you guide them with greater clarity and confidence!
+                <p className="text-xs sm:text-sm lg:text-base leading-relaxed">
+                  Understanding your teen&apos;s world helps you guide them with greater clarity and confidence!
                 </p>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="w-full lg:w-[60%] flex flex-col h-screen lg:h-[91vh] p-4 sm:p-6 lg:p-8 relative">
+        <div className="w-full lg:w-[60%] flex flex-col h-full lg:h-[91vh] p-4 sm:p-5 lg:p-8 relative min-h-0">
           <div className="flex-1 overflow-y-auto min-h-0 scroll-smooth" style={{ scrollbarWidth: 'thin', scrollbarColor: '#8B2D6C #F8E4FF' }}>
-            <div className="flex flex-col gap-4 justify-end min-h-full pb-4">
+            <div className="flex flex-col gap-3 sm:gap-4 justify-end min-h-full pb-3 sm:pb-4">
             {messages.map((msg) => (
               <div
                 key={msg.id}
-                className={`flex gap-3 items-end  ${
+                className={`flex gap-2 sm:gap-3 items-end ${
                   msg.type === "user" ? "justify-end" : "justify-start"
                 }`}
               >
                 {(msg.type === "assistant" || msg.type === "loading") && (
-                  <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shrink-0 overflow-hidden">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white flex items-center justify-center shrink-0 overflow-hidden">
                     <Image
                       src="/bot.svg"
                       alt="Bot"
@@ -427,7 +427,7 @@ export default function WelcomePage() {
                   </div>
                 )}
                 {msg.type === "loading" ? (
-                  <div className="bg-[#F8E4FF] text-black rounded-tl-xl rounded-tr-xl rounded-br-xl px-4 py-3 mb-1">
+                  <div className="bg-[#F8E4FF] text-black rounded-tl-xl rounded-tr-xl rounded-br-xl px-3 sm:px-4 py-2 sm:py-3 mb-1 max-w-[85%] sm:max-w-[75%]">
                     <div className="flex gap-1.5 items-center">
                       <div className="w-2 h-2 bg-[#8B2D6C] rounded-full animate-bounce" style={{ animationDelay: "0ms" }}></div>
                       <div className="w-2 h-2 bg-[#8B2D6C] rounded-full animate-bounce" style={{ animationDelay: "150ms" }}></div>
@@ -436,7 +436,7 @@ export default function WelcomePage() {
                   </div>
                 ) : (
                   <div
-                    className={`px-4 py-3 mb-1 transition-all duration-300 ease-in-out ${
+                    className={`px-3 sm:px-4 py-2 sm:py-3 mb-1 transition-all duration-300 ease-in-out max-w-[85%] sm:max-w-[75%] lg:max-w-none ${
                       msg.type === "assistant"
                         ? "bg-[#F8E4FF] text-black rounded-tl-xl rounded-tr-xl rounded-br-xl"
                         : "bg-white text-[#704180] rounded-tl-xl rounded-tr-xl rounded-bl-xl"
@@ -446,13 +446,13 @@ export default function WelcomePage() {
                     }}
                   >
                     {msg.id === messages.length && currentStep === 5 ? (
-                      <div className="text-sm lg:text-base leading-relaxed font-medium">
-                        <p className="mb-3">Okay! great</p>
-                        <p className="mb-3">
+                      <div className="text-xs sm:text-sm lg:text-base leading-relaxed font-medium">
+                        <p className="mb-2 sm:mb-3">Okay! great</p>
+                        <p className="mb-2 sm:mb-3">
                           Let&apos;s get started with two assessments to know more
                           about your teen.
                         </p>
-                        <ol className="list-decimal list-inside space-y-2 ml-2">
+                        <ol className="list-decimal list-inside space-y-1 sm:space-y-2 ml-1 sm:ml-2">
                           <li className="font-semibold">
                             Relationship with your Teen
                           </li>
@@ -460,24 +460,24 @@ export default function WelcomePage() {
                         </ol>
                       </div>
                     ) : (
-                      <p className="text-sm lg:text-base leading-relaxed font-medium">
+                      <p className="text-xs sm:text-sm lg:text-base leading-relaxed font-medium break-words">
                         {msg.content}
                       </p>
                     )}
                   </div>
                 )}
                 {msg.type === "user" && (
-                  <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shrink-0 border-2 border-gray-200">
-                    <User className="w-6 h-6 text-black" />
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white flex items-center justify-center shrink-0 border-2 border-gray-200">
+                    <User className="w-4 h-4 sm:w-6 sm:h-6 text-black" />
                   </div>
                 )}
               </div>
             ))}
             {currentStep === 5 && (
-              <div className="flex justify-center mt-4 mb-4">
+              <div className="flex justify-center mt-3 sm:mt-4 mb-3 sm:mb-4">
                 <button
                   onClick={() => router.push("/surveys")}
-                  className="px-8 py-3 rounded-full cursor-pointer text-white font-semibold hover:opacity-90 transition-opacity shadow-lg"
+                  className="px-6 sm:px-8 py-2.5 sm:py-3 rounded-full cursor-pointer text-white text-sm sm:text-base font-semibold hover:opacity-90 transition-opacity shadow-lg"
                   style={{
                     background:
                       "linear-gradient(180deg, #8B2D6C 0%, #704180 100%)",
@@ -492,7 +492,7 @@ export default function WelcomePage() {
           </div>
 
           {currentStep < 5 && (
-            <form onSubmit={handleSendMessage} className="relative mt-4 shrink-0">
+            <form onSubmit={handleSendMessage} className="relative mt-3 sm:mt-4 shrink-0">
               <input
                 ref={inputRef}
                 type="text"
@@ -501,18 +501,18 @@ export default function WelcomePage() {
                 placeholder="Type your answer here..."
                 disabled={isLoading}
                 autoFocus
-                className="w-full px-4 py-3 pr-12 rounded-full bg-white text-[#704180] placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#704180]/20 text-sm lg:text-base disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full px-3 sm:px-4 py-2.5 sm:py-3 pr-11 sm:pr-12 rounded-full bg-white text-[#704180] placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#704180]/20 text-sm lg:text-base disabled:opacity-50 disabled:cursor-not-allowed"
               />
               <button
                 type="submit"
                 disabled={isLoading}
-                className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full flex items-center justify-center hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
+                className="absolute right-1.5 sm:right-2 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
                 style={{
                   background:
                     "linear-gradient(180deg, #8B2D6C 0%, #704180 100%)",
                 }}
               >
-                <ArrowRight className="w-5 h-5 text-white" />
+                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
               </button>
             </form>
           )}

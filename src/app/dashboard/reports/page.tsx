@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowRight, ChevronLeft, ChevronRight, GraduationCap, X } from "lucide-react";
+import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { useAuthStore } from "@/store/authStore";
 import { useRouter } from "next/navigation";
 
@@ -116,60 +116,60 @@ export default function DashboardReportsPage() {
   })();
 
   return (
-    <div className="flex flex-col gap-10">
+    <div className="flex flex-col gap-6 sm:gap-8 lg:gap-10">
       <section className="flex flex-col gap-2">
         <div className="flex items-center justify-between">
-          <p className="text-sm font-medium text-[#8F82B0]">Welcome Back, {firstName}</p>
+          <p className="text-xs sm:text-sm font-medium text-[#8F82B0]">Welcome Back, {firstName}</p>
           <button 
             onClick={() => router.push('/dashboard/downloadreport')}
-            className="rounded-full cursor-pointer bg-[#8B2D6C] px-6 py-2 text-sm font-semibold text-white shadow-lg shadow-[#8B2D6C]/25 transition-transform hover:-translate-y-0.5"
+            className="rounded-full cursor-pointer bg-[#8B2D6C] px-4 sm:px-6 py-1.5 sm:py-2 text-xs sm:text-sm font-semibold text-white shadow-lg shadow-[#8B2D6C]/25 transition-transform hover:-translate-y-0.5"
           >
             Reports
           </button>
         </div>
-        <div className="flex flex-wrap items-center gap-4">
-          <h1 className="text-3xl font-semibold text-[#2C1B3A]">
+        <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-3 sm:gap-4">
+          <h1 className="text-2xl sm:text-3xl font-semibold text-[#2C1B3A]">
             How&apos;s Alex doing today?
           </h1>
-          <div className="flex items-center gap-2">
-            <button className="rounded-full bg-[#8B2D6C] px-6 py-2 text-sm font-semibold text-white shadow-lg shadow-[#8B2D6C]/25 transition-transform hover:-translate-y-0.5">
+          <div className="flex flex-wrap items-center gap-2">
+            <button className="rounded-full bg-[#8B2D6C] px-4 sm:px-6 py-1.5 sm:py-2 text-xs sm:text-sm font-semibold text-white shadow-lg shadow-[#8B2D6C]/25 transition-transform hover:-translate-y-0.5">
               + Ask AI
             </button>
-            <button className="rounded-full border border-[#E0D5F5] bg-white px-6 py-2 text-sm font-semibold text-[#8B2D6C] transition-colors hover:bg-[#F7F3FF]">
+            <button className="rounded-full border border-[#E0D5F5] bg-white px-4 sm:px-6 py-1.5 sm:py-2 text-xs sm:text-sm font-semibold text-[#8B2D6C] transition-colors hover:bg-[#F7F3FF]">
               Take Assessment
             </button>
-            <button className="rounded-full border border-[#E0D5F5] bg-white px-6 py-2 text-sm font-semibold text-[#8B2D6C] transition-colors hover:bg-[#F7F3FF]">
+            <button className="rounded-full border border-[#E0D5F5] bg-white px-4 sm:px-6 py-1.5 sm:py-2 text-xs sm:text-sm font-semibold text-[#8B2D6C] transition-colors hover:bg-[#F7F3FF]">
               Consult Doctor
             </button>
           </div>
         </div>
       </section>
 
-      <section className="grid gap-6 xl:grid-cols-[1.3fr_1fr]">
-        <div className="rounded-3xl border border-[#EFE7FF] bg-white shadow-sm shadow-[#E7DFFF]">
-          <div className="bg-linear-to-r from-[#8B2D6C] to-[#5F3A8F] rounded-t-3xl px-6 py-5 text-white">
-            <div className="flex items-center gap-3">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white/20 text-lg font-semibold">
+      <section className="grid grid-cols-1 xl:grid-cols-[1.3fr_1fr] gap-4 sm:gap-6">
+        <div className="rounded-2xl sm:rounded-3xl border border-[#EFE7FF] bg-white shadow-sm shadow-[#E7DFFF]">
+          <div className="bg-linear-to-r from-[#8B2D6C] to-[#5F3A8F] rounded-t-2xl sm:rounded-t-3xl px-4 sm:px-6 py-4 sm:py-5 text-white">
+            <div className="flex items-center gap-2 sm:gap-3">
+              <div className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-white/20 text-base sm:text-lg font-semibold">
                 A
               </div>
               <div>
-                <h2 className="text-xl font-semibold">{childOverview.name}</h2>
-                <p className="text-sm text-white/80">{childOverview.age}</p>
+                <h2 className="text-lg sm:text-xl font-semibold">{childOverview.name}</h2>
+                <p className="text-xs sm:text-sm text-white/80">{childOverview.age}</p>
               </div>
             </div>
-            <p className="mt-4 text-sm italic text-white/75">
+            <p className="mt-3 sm:mt-4 text-xs sm:text-sm italic text-white/75">
               {childOverview.focusArea}
             </p>
           </div>
 
-          <div className="flex flex-col gap-4 px-6 py-6">
+          <div className="flex flex-col gap-3 sm:gap-4 px-4 sm:px-6 py-4 sm:py-6">
             {childOverview.scores.map((score) => (
-              <div key={score.label} className="rounded-2xl border border-[#F1E8FF] bg-[#FBF9FF] p-4">
+              <div key={score.label} className="rounded-xl sm:rounded-2xl border border-[#F1E8FF] bg-[#FBF9FF] p-3 sm:p-4">
                 <div className="flex items-center justify-between">
-                  <p className="text-sm font-semibold text-[#2C1B3A]">{score.label}</p>
-                  <span className="text-sm font-medium text-[#8F82B0]">{score.value}%</span>
+                  <p className="text-xs sm:text-sm font-semibold text-[#2C1B3A]">{score.label}</p>
+                  <span className="text-xs sm:text-sm font-medium text-[#8F82B0]">{score.value}%</span>
                 </div>
-                <div className="mt-3 h-2 rounded-full bg-[#E9E4F4]">
+                <div className="mt-2 sm:mt-3 h-1.5 sm:h-2 rounded-full bg-[#E9E4F4]">
                   <div className={`h-full rounded-full ${score.color}`} style={{ width: `${score.value}%` }}></div>
                 </div>
               </div>
@@ -177,25 +177,25 @@ export default function DashboardReportsPage() {
           </div>
         </div>
 
-        <div className="rounded-3xl border border-[#EFE7FF] bg-white shadow-sm shadow-[#E7DFFF]">
-          <div className="flex items-center justify-between px-6 py-5">
-            <h2 className="text-lg font-semibold text-[#2C1B3A]">
+        <div className="rounded-2xl sm:rounded-3xl border border-[#EFE7FF] bg-white shadow-sm shadow-[#E7DFFF]">
+          <div className="flex items-center justify-between px-4 sm:px-6 py-4 sm:py-5">
+            <h2 className="text-base sm:text-lg font-semibold text-[#2C1B3A]">
               Insights / Recommendations Section
             </h2>
-            <button className="text-sm font-semibold text-[#8B2D6C] hover:underline">
+            <button className="text-xs sm:text-sm font-semibold text-[#8B2D6C] hover:underline shrink-0 ml-2">
               View all
             </button>
           </div>
-          <div className="flex flex-col gap-4 px-6 pb-6">
+          <div className="flex flex-col gap-3 sm:gap-4 px-4 sm:px-6 pb-4 sm:pb-6">
             {insights.map((insight, index) => (
               <div
                 key={index}
-                className="flex items-center gap-4 rounded-2xl border border-[#F1E8FF] bg-[#FBF9FF] px-4 py-4"
+                className="flex items-center gap-3 sm:gap-4 rounded-xl sm:rounded-2xl border border-[#F1E8FF] bg-[#FBF9FF] px-3 sm:px-4 py-3 sm:py-4"
               >
-                <div className={`${insight.iconBg} ${insight.iconColor} flex h-11 w-11 items-center justify-center rounded-full text-xl`}>
+                <div className={`${insight.iconBg} ${insight.iconColor} flex h-9 w-9 sm:h-11 sm:w-11 items-center justify-center rounded-full text-lg sm:text-xl shrink-0`}>
                   👍
                 </div>
-                <p className="flex-1 text-sm font-medium text-[#2C1B3A]">
+                <p className="flex-1 text-xs sm:text-sm font-medium text-[#2C1B3A]">
                   {insight.message} <span>{insight.highlight}</span>
                 </p>
               </div>
@@ -204,11 +204,11 @@ export default function DashboardReportsPage() {
         </div>
       </section>
 
-      <section className="grid gap-6 xl:grid-cols-[1.1fr_1fr]">
-        <div className="rounded-3xl border border-[#EFE7FF] bg-white shadow-sm shadow-[#E7DFFF]">
-          <div className="flex items-center justify-between px-6 py-5">
-            <h2 className="text-lg font-semibold text-[#2C1B3A]">Suggested Doctors</h2>
-            <button className="text-sm font-semibold text-[#8B2D6C] hover:underline">
+      <section className="grid grid-cols-1 xl:grid-cols-[1.1fr_1fr] gap-4 sm:gap-6">
+        <div className="rounded-2xl sm:rounded-3xl border border-[#EFE7FF] bg-white shadow-sm shadow-[#E7DFFF]">
+          <div className="flex items-center justify-between px-4 sm:px-6 py-4 sm:py-5">
+            <h2 className="text-base sm:text-lg font-semibold text-[#2C1B3A]">Suggested Doctors</h2>
+            <button className="text-xs sm:text-sm font-semibold text-[#8B2D6C] hover:underline shrink-0 ml-2">
               View all
             </button>
           </div>
@@ -216,18 +216,18 @@ export default function DashboardReportsPage() {
             {suggestedDoctors.map((doctor) => (
               <div
                 key={doctor.name}
-                className="flex items-center justify-between border-t border-[#F1E8FF] px-6 py-4 first:border-t-0"
+                className="flex items-center justify-between border-t border-[#F1E8FF] px-4 sm:px-6 py-3 sm:py-4 first:border-t-0"
               >
-                <div className="flex items-center gap-4">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#F1E8FF] text-base font-semibold text-[#8B2D6C]">
+                <div className="flex items-center gap-3 sm:gap-4 min-w-0 flex-1">
+                  <div className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-[#F1E8FF] text-sm sm:text-base font-semibold text-[#8B2D6C] shrink-0">
                     {doctor.avatar}
                   </div>
-                  <div>
-                    <p className="text-sm font-semibold text-[#2C1B3A]">{doctor.name}</p>
-                    <p className="text-xs text-[#8F82B0]">{doctor.specialty}</p>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-xs sm:text-sm font-semibold text-[#2C1B3A] truncate">{doctor.name}</p>
+                    <p className="text-xs text-[#8F82B0] truncate">{doctor.specialty}</p>
                   </div>
                 </div>
-                <button className="rounded-full bg-[#8B2D6C] px-5 py-2 text-xs font-semibold text-white">
+                <button className="rounded-full bg-[#8B2D6C] px-3 sm:px-5 py-1.5 sm:py-2 text-xs font-semibold text-white shrink-0 ml-2">
                   View
                 </button>
               </div>
@@ -235,7 +235,7 @@ export default function DashboardReportsPage() {
           </div>
         </div>
 
-        <div className="rounded-3xl bg-linear-to-br from-[#4A216A] via-[#703C91] to-[#4A216A] p-4 px-8 pt-8 text-white shadow-lg flex flex-col justify-center h-full relative overflow-hidden">
+        <div className="rounded-2xl sm:rounded-3xl bg-linear-to-br from-[#4A216A] via-[#703C91] to-[#4A216A] p-3 sm:p-4 lg:px-8 lg:pt-8 text-white shadow-lg flex flex-col justify-center min-h-[300px] sm:h-full relative overflow-hidden">
           <div className="relative flex-1 min-h-0">
             <div className="overflow-hidden h-full">
               <div
@@ -262,42 +262,42 @@ export default function DashboardReportsPage() {
                         <div className="absolute top-20 right-4 w-10 h-10 bg-white rounded-sm"></div>
                       </div>
 
-                      <div className="relative z-10 flex flex-col flex-1 justify-between">
-                        {/* Top Section: Category and Title */}
-                        <div className="flex flex-col gap-[9px]">
-                          {/* Category */}
-                          <p 
-                            className="text-[12.87px] uppercase text-[#C0C0C0] font-poppins font-normal leading-[0.93em] tracking-[0.08em]"
-                            style={{ fontFamily: 'Poppins, sans-serif' }}
-                          >
-                            Category - {course.category}
-                          </p>
+                        <div className="relative z-10 flex flex-col flex-1 justify-between">
+                          {/* Top Section: Category and Title */}
+                          <div className="flex flex-col gap-2 sm:gap-[9px]">
+                            {/* Category */}
+                            <p 
+                              className="text-[10px] sm:text-[12.87px] uppercase text-[#C0C0C0] font-poppins font-normal leading-[0.93em] tracking-[0.08em]"
+                              style={{ fontFamily: 'Poppins, sans-serif' }}
+                            >
+                              Category - {course.category}
+                            </p>
 
-                          {/* Course Title */}
-                          <h3 
-                            className="text-[14px] font-semibold text-white leading-[1.655em] line-clamp-2"
-                            style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 600 }}
-                          >
-                            {course.title}
-                          </h3>
-                        </div>
+                            {/* Course Title */}
+                            <h3 
+                              className="text-xs sm:text-[14px] font-semibold text-white leading-[1.655em] line-clamp-2"
+                              style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 600 }}
+                            >
+                              {course.title}
+                            </h3>
+                          </div>
 
-                        {/* Middle Section: Continue Button */}
-                        <div className="flex items-start mt-5">
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setSelectedCourse(course.link);
-                              setSelectedCourseTitle(course.title);
-                              setIframeLoading(true);
-                            }}
-                            className="relative z-10 w-[103.83px] h-[28.31px] rounded-[16.95px] border border-white bg-white/27 flex items-center justify-center text-white text-[12px] font-poppins font-normal leading-[0.56em] hover:bg-white/35 transition-colors"
-                            style={{ fontFamily: 'Poppins, sans-serif', padding: '6.1px 13.56px' }}
-                          >
-                            Continue→
-                          </button>
+                          {/* Middle Section: Continue Button */}
+                          <div className="flex items-start mt-3 sm:mt-5">
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setSelectedCourse(course.link);
+                                setSelectedCourseTitle(course.title);
+                                setIframeLoading(true);
+                              }}
+                              className="relative z-10 w-[90px] sm:w-[103.83px] h-[26px] sm:h-[28.31px] rounded-[14px] sm:rounded-[16.95px] border border-white bg-white/27 flex items-center justify-center text-white text-[10px] sm:text-[12px] font-poppins font-normal leading-[0.56em] hover:bg-white/35 transition-colors"
+                              style={{ fontFamily: 'Poppins, sans-serif', padding: '5px 12px' }}
+                            >
+                              Continue→
+                            </button>
+                          </div>
                         </div>
-                      </div>
                     </div>
                   </div>
                 ))}
@@ -312,12 +312,12 @@ export default function DashboardReportsPage() {
                 }
               }}
               disabled={currentSlide === 0}
-              className={`absolute -left-7 top-1/2 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm text-white hover:bg-white/30 transition-colors z-10 ${
+              className={`absolute -left-3 sm:-left-7 top-1/2 -translate-y-1/2 flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm text-white hover:bg-white/30 transition-colors z-10 ${
                 currentSlide === 0 ? 'opacity-50 cursor-not-allowed' : ''
               }`}
               aria-label="Previous course"
             >
-              <ChevronLeft className="h-5 w-5" />
+              <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5" />
             </button>
 
             <button
@@ -327,12 +327,12 @@ export default function DashboardReportsPage() {
                 }
               }}
               disabled={currentSlide === availableCourses.length - 1}
-              className={`absolute -right-7 top-1/2 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm text-white hover:bg-white/30 transition-colors z-10 ${
+              className={`absolute -right-3 sm:-right-7 top-1/2 -translate-y-1/2 flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm text-white hover:bg-white/30 transition-colors z-10 ${
                 currentSlide === availableCourses.length - 1 ? 'opacity-50 cursor-not-allowed' : ''
               }`}
               aria-label="Next course"
             >
-              <ChevronRight className="h-5 w-5" />
+              <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5" />
             </button>
           </div>
 
@@ -356,10 +356,10 @@ export default function DashboardReportsPage() {
 
       {/* Iframe Modal for Course Content */}
       {selectedCourse && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-          <div className="relative w-full h-full max-w-7xl max-h-[90vh] bg-white rounded-3xl shadow-2xl overflow-hidden">
-            <div className="absolute top-0 left-0 right-0 z-10 flex items-center justify-between bg-linear-to-b from-white to-white/95 px-6 py-4 border-b border-[#EFE7FF]">
-              <h3 className="text-lg font-semibold text-[#2C1B3A] line-clamp-1 pr-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-2 sm:p-4">
+          <div className="relative w-full h-full max-w-7xl max-h-[95vh] sm:max-h-[90vh] bg-white rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden">
+            <div className="absolute top-0 left-0 right-0 z-10 flex items-center justify-between bg-linear-to-b from-white to-white/95 px-3 sm:px-6 py-3 sm:py-4 border-b border-[#EFE7FF]">
+              <h3 className="text-sm sm:text-base lg:text-lg font-semibold text-[#2C1B3A] line-clamp-1 pr-2 sm:pr-4">
                 {selectedCourseTitle || "Course Content"}
               </h3>
               <button
@@ -367,24 +367,24 @@ export default function DashboardReportsPage() {
                   setSelectedCourse(null);
                   setSelectedCourseTitle(null);
                 }}
-                className="flex h-10 w-10 items-center justify-center rounded-full bg-[#F1E8FF] text-[#8B2D6C] transition-colors hover:bg-[#8B2D6C] hover:text-white shrink-0"
+                className="flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-[#F1E8FF] text-[#8B2D6C] transition-colors hover:bg-[#8B2D6C] hover:text-white shrink-0"
                 aria-label="Close course"
               >
-                <X className="h-5 w-5" />
+                <X className="h-4 w-4 sm:h-5 sm:w-5" />
               </button>
             </div>
             {iframeLoading && (
-              <div className="absolute inset-0 flex items-center justify-center pt-16 bg-white/80 backdrop-blur-sm z-5">
+              <div className="absolute inset-0 flex items-center justify-center pt-12 sm:pt-16 bg-white/80 backdrop-blur-sm z-5">
                 <div className="text-center">
-                  <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-[#8B2D6C] border-r-transparent"></div>
-                  <p className="mt-4 text-sm text-[#8F82B0]">Loading course...</p>
+                  <div className="inline-block h-6 w-6 sm:h-8 sm:w-8 animate-spin rounded-full border-4 border-solid border-[#8B2D6C] border-r-transparent"></div>
+                  <p className="mt-3 sm:mt-4 text-xs sm:text-sm text-[#8F82B0]">Loading course...</p>
                 </div>
               </div>
             )}
             <iframe
               key={selectedCourse}
               src={selectedCourse}
-              className="w-full h-full pt-16 bg-white"
+              className="w-full h-full pt-12 sm:pt-16 bg-white"
               title="Course Content"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen

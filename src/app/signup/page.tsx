@@ -94,7 +94,7 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="flex min-h-screen w-full font-urbanist">
+    <div className="flex min-h-screen w-full font-urbanist overflow-hidden">
       <div className="relative hidden lg:flex lg:w-1/2 flex-col justify-between p-8 xl:p-12 px-8 xl:px-16 min-h-screen" style={{
         background: 'linear-gradient(90deg, #704180 6.54%, #8B2D6C 90.65%)'
       }}>
@@ -139,10 +139,10 @@ export default function SignupPage() {
         </div>
       </div>
 
-      <div className="w-full lg:w-1/2 flex items-center justify-center bg-white p-6 sm:p-8 lg:p-10 xl:p-12 min-h-screen">
-        <div className="w-full max-w-[358px] py-6 lg:py-0">
+      <div className="w-full lg:w-1/2 flex items-start lg:items-center justify-center bg-white p-4 sm:p-6 lg:p-10 xl:p-12 min-h-screen overflow-y-auto">
+        <div className="w-full max-w-[358px] py-4 sm:py-6 lg:py-0">
           {/* Logo */}
-          <div className="mb-6 sm:mb-8 flex justify-center">
+          <div className="mb-4 sm:mb-6 lg:mb-8 flex justify-center">
             <div className="flex items-center gap-2">
               <div className="w-10 h-10 bg-gradient-to-r from-[#8B2D6C] to-[#704180] rounded-lg flex items-center justify-center">
                 <span className="text-2xl font-bold text-white">Z</span>
@@ -152,7 +152,7 @@ export default function SignupPage() {
           </div>
 
           {/* Tabs */}
-          <div className="mb-6 sm:mb-8">
+          <div className="mb-4 sm:mb-6 lg:mb-8">
             <div className="flex gap-1 bg-[#F2EEF4] p-1 rounded-lg">
               <button
                 onClick={() => setIsSignIn(false)}
@@ -178,15 +178,15 @@ export default function SignupPage() {
           </div>
 
           {error && (
-            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+            <div className="mb-3 sm:mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
               <p className="text-sm text-red-600">{error}</p>
             </div>
           )}
 
           {isSignIn ? (
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
               <div className="space-y-2">
-                <label className="block text-base font-normal text-[#26203B]">
+                <label className="block text-sm sm:text-base font-normal text-[#26203B]">
                   Email Id
                 </label>
                 <input
@@ -195,13 +195,13 @@ export default function SignupPage() {
                   value={signInData.email}
                   onChange={handleSignInInputChange}
                   placeholder="Enter Email Id"
-                  className="w-full px-4 py-2 border border-[rgba(136,136,136,0.4)] rounded-lg text-sm text-[#9C9AA5] focus:outline-none focus:ring-2 focus:ring-[#704180]/20"
+                  className="w-full px-4 py-2.5 sm:py-2 border border-[rgba(136,136,136,0.4)] rounded-lg text-sm text-[#9C9AA5] focus:outline-none focus:ring-2 focus:ring-[#704180]/20"
                   required
                 />
               </div>
 
               <div className="space-y-2">
-                <label className="block text-base font-normal text-[#26203B]">
+                <label className="block text-sm sm:text-base font-normal text-[#26203B]">
                   Password
                 </label>
                 <div className="relative">
@@ -211,7 +211,7 @@ export default function SignupPage() {
                     value={signInData.password}
                     onChange={handleSignInInputChange}
                     placeholder="Enter Password"
-                    className="w-full px-4 py-2 pr-10 border border-[rgba(136,136,136,0.4)] rounded-lg text-sm text-[#9C9AA5] focus:outline-none focus:ring-2 focus:ring-[#704180]/20"
+                    className="w-full px-4 py-2.5 sm:py-2 pr-10 border border-[rgba(136,136,136,0.4)] rounded-lg text-sm text-[#9C9AA5] focus:outline-none focus:ring-2 focus:ring-[#704180]/20"
                     required
                   />
                   <button
@@ -234,7 +234,7 @@ export default function SignupPage() {
                 </div>
               </div>
 
-              <div className="space-y-5">
+              <div className="space-y-4 sm:space-y-5 pt-2">
                 <button
                   type="submit"
                   disabled={isLoading}
@@ -278,9 +278,9 @@ export default function SignupPage() {
               </div>
             </form>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
               <div className="space-y-2">
-                <label className="block text-base font-normal text-[#26203B]">
+                <label className="block text-sm sm:text-base font-normal text-[#26203B]">
                   Name
                 </label>
                 <input
@@ -289,13 +289,13 @@ export default function SignupPage() {
                   value={formData.name}
                   onChange={handleInputChange}
                   placeholder="Enter Name"
-                  className="w-full px-4 py-2 border border-[rgba(136,136,136,0.4)] rounded-lg text-sm text-[#9C9AA5] focus:outline-none focus:ring-2 focus:ring-[#704180]/20"
+                  className="w-full px-4 py-2.5 sm:py-2 border border-[rgba(136,136,136,0.4)] rounded-lg text-sm text-[#9C9AA5] focus:outline-none focus:ring-2 focus:ring-[#704180]/20"
                   required
                 />
               </div>
 
               <div className="space-y-2">
-                <label className="block text-base font-normal text-[#26203B]">
+                <label className="block text-sm sm:text-base font-normal text-[#26203B]">
                   Email Id
                 </label>
                 <input
@@ -304,13 +304,13 @@ export default function SignupPage() {
                   value={formData.email}
                   onChange={handleInputChange}
                   placeholder="Enter Email Id"
-                  className="w-full px-4 py-2 border border-[rgba(136,136,136,0.4)] rounded-lg text-sm text-[#9C9AA5] focus:outline-none focus:ring-2 focus:ring-[#704180]/20"
+                  className="w-full px-4 py-2.5 sm:py-2 border border-[rgba(136,136,136,0.4)] rounded-lg text-sm text-[#9C9AA5] focus:outline-none focus:ring-2 focus:ring-[#704180]/20"
                   required
                 />
               </div>
 
               <div className="space-y-2">
-                <label className="block text-base font-normal text-[#26203B]">
+                <label className="block text-sm sm:text-base font-normal text-[#26203B]">
                   Mobile number
                 </label>
                 <div className="flex gap-2">
@@ -319,7 +319,7 @@ export default function SignupPage() {
                       name="countryCode"
                       value={formData.countryCode}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-2 pr-8 border border-[rgba(136,136,136,0.4)] rounded-lg text-sm text-[#26203B] focus:outline-none focus:ring-2 focus:ring-[#704180]/20 bg-white appearance-none"
+                      className="w-full px-3 sm:px-4 py-2.5 sm:py-2 pr-8 border border-[rgba(136,136,136,0.4)] rounded-lg text-sm text-[#26203B] focus:outline-none focus:ring-2 focus:ring-[#704180]/20 bg-white appearance-none"
                     >
                       <option value="+91">+91</option>
                       <option value="+1">+1</option>
@@ -333,14 +333,14 @@ export default function SignupPage() {
                     value={formData.mobile}
                     onChange={handleInputChange}
                     placeholder="Enter Mobile number"
-                    className="flex-1 px-4 py-2 border border-[rgba(136,136,136,0.4)] rounded-lg text-sm text-[#9C9AA5] focus:outline-none focus:ring-2 focus:ring-[#704180]/20"
+                    className="flex-1 px-4 py-2.5 sm:py-2 border border-[rgba(136,136,136,0.4)] rounded-lg text-sm text-[#9C9AA5] focus:outline-none focus:ring-2 focus:ring-[#704180]/20"
                     required
                   />
                 </div>
               </div>
 
               <div className="space-y-2">
-                <label className="block text-base font-normal text-[#26203B]">
+                <label className="block text-sm sm:text-base font-normal text-[#26203B]">
                   Create Password
                 </label>
                 <div className="relative">
@@ -350,7 +350,7 @@ export default function SignupPage() {
                     value={formData.password}
                     onChange={handleInputChange}
                     placeholder="Enter Password"
-                    className="w-full px-4 py-2 pr-10 border border-[rgba(136,136,136,0.4)] rounded-lg text-sm text-[#9C9AA5] focus:outline-none focus:ring-2 focus:ring-[#704180]/20"
+                    className="w-full px-4 py-2.5 sm:py-2 pr-10 border border-[rgba(136,136,136,0.4)] rounded-lg text-sm text-[#9C9AA5] focus:outline-none focus:ring-2 focus:ring-[#704180]/20"
                     required
                   />
                   <button
@@ -369,7 +369,7 @@ export default function SignupPage() {
               </div>
 
               <div className="space-y-2">
-                <label className="block text-base font-normal text-[#26203B]">
+                <label className="block text-sm sm:text-base font-normal text-[#26203B]">
                   Confirm Password
                 </label>
                 <div className="relative">
@@ -379,7 +379,7 @@ export default function SignupPage() {
                     value={formData.confirmPassword}
                     onChange={handleInputChange}
                     placeholder="Enter Password"
-                    className="w-full px-4 py-2 pr-10 border border-[rgba(136,136,136,0.4)] rounded-lg text-sm text-[#9C9AA5] focus:outline-none focus:ring-2 focus:ring-[#704180]/20"
+                    className="w-full px-4 py-2.5 sm:py-2 pr-10 border border-[rgba(136,136,136,0.4)] rounded-lg text-sm text-[#9C9AA5] focus:outline-none focus:ring-2 focus:ring-[#704180]/20"
                     required
                   />
                   <button
@@ -397,7 +397,7 @@ export default function SignupPage() {
                 </div>
               </div>
 
-              <div className="space-y-5">
+              <div className="space-y-4 sm:space-y-5 pt-2">
                 <button
                   type="submit"
                   disabled={isLoading}

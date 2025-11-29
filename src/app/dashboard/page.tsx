@@ -186,51 +186,51 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="flex flex-col gap-10">
-      <section className="flex items-end gap-6">
-        <div>
-          <h1 className="text-3xl font-semibold text-[#2C1B3A]">
+    <div className="flex flex-col gap-6 sm:gap-8 lg:gap-10">
+      <section className="flex flex-col sm:flex-row sm:items-end gap-4 sm:gap-6">
+        <div className="flex-1">
+          <h1 className="text-2xl sm:text-3xl font-semibold text-[#2C1B3A]">
             Hello, {firstName}
           </h1>
-          <p className="mt-2 text-xl font-medium text-[#8B2D6C]">
+          <p className="mt-2 text-base sm:text-lg lg:text-xl font-medium text-[#8B2D6C]">
             How can I help you today?
           </p>
         </div>
 
-        <div className="flex flex-wrap gap-3">
-          <button className="rounded-full bg-[#8B2D6C] px-6 py-1.5  text-sm font-semibold text-white shadow-lg shadow-[#8B2D6C]/25 transition-transform hover:-translate-y-0.5">
+        <div className="flex flex-wrap gap-2 sm:gap-3">
+          <button className="rounded-full bg-[#8B2D6C] px-4 sm:px-6 py-1.5 text-xs sm:text-sm font-semibold text-white shadow-lg shadow-[#8B2D6C]/25 transition-transform hover:-translate-y-0.5">
             + Ask AI
           </button>
-          <button className="rounded-full border border-[#E0D5F5] bg-white px-6 py-1.5 text-sm font-semibold text-[#8B2D6C] transition-colors hover:bg-[#F7F3FF]">
+          <button className="rounded-full border border-[#E0D5F5] bg-white px-4 sm:px-6 py-1.5 text-xs sm:text-sm font-semibold text-[#8B2D6C] transition-colors hover:bg-[#F7F3FF]">
             Take Assessment
           </button>
-          <button className="rounded-full border border-[#E0D5F5] bg-white px-6 py-1.5 text-sm font-semibold text-[#8B2D6C] transition-colors hover:bg-[#F7F3FF]">
+          <button className="rounded-full border border-[#E0D5F5] bg-white px-4 sm:px-6 py-1.5 text-xs sm:text-sm font-semibold text-[#8B2D6C] transition-colors hover:bg-[#F7F3FF]">
             Consult Doctor
           </button>
         </div>
       </section>
 
-      <section className="grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
+      <section className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-6">
         {statCards.map((card) => {
           const Icon = card.icon;
           return (
             <div
               key={card.label}
-              className="rounded-3xl border border-[#EFE7FF] bg-white p-6 shadow-sm shadow-[#E7DFFF]"
+              className="rounded-2xl sm:rounded-3xl border border-[#EFE7FF] bg-white p-4 sm:p-6 shadow-sm shadow-[#E7DFFF]"
             >
               <div className="flex items-end justify-between">
                 <div>
-                  <p className="text-sm font-medium text-[#8F82B0]">
+                  <p className="text-xs sm:text-sm font-medium text-[#8F82B0]">
                     {card.label}
                   </p>
-                  <p className="mt-6 text-4xl font-semibold text-[#2C1B3A]">
+                  <p className="mt-4 sm:mt-6 text-3xl sm:text-4xl font-semibold text-[#2C1B3A]">
                     {card.value}
                   </p>
                 </div>
                 <div
-                  className={`flex h-12 w-12 items-center justify-center rounded-2xl ${card.accent}`}
+                  className={`flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-xl sm:rounded-2xl ${card.accent}`}
                 >
-                  <Icon className="h-6 w-6" />
+                  <Icon className="h-5 w-5 sm:h-6 sm:w-6" />
                 </div>
               </div>
             </div>
@@ -238,51 +238,51 @@ export default function DashboardPage() {
         })}
       </section>
 
-      <section className="grid gap-6 lg:grid-cols-[4fr_3fr]">
-        <div className="rounded-3xl border border-[#EFE7FF] bg-white p-6 shadow-sm shadow-[#E7DFFF]">
-          <div className="flex items-center justify-between">
+      <section className="grid grid-cols-1 lg:grid-cols-[4fr_3fr] gap-4 sm:gap-6">
+        <div className="rounded-2xl sm:rounded-3xl border border-[#EFE7FF] bg-white p-4 sm:p-6 shadow-sm shadow-[#E7DFFF]">
+          <div className="flex items-center justify-between mb-4 sm:mb-0">
             <div>
-              <h2 className="text-lg font-semibold text-[#2C1B3A]">
+              <h2 className="text-base sm:text-lg font-semibold text-[#2C1B3A]">
                 Upcoming Appointments
               </h2>
-              <p className="text-sm text-[#8F82B0]">
+              <p className="text-xs sm:text-sm text-[#8F82B0]">
                 Stay on top of your schedule
               </p>
             </div>
-            <button className="text-sm font-semibold text-[#8B2D6C] hover:underline">
+            <button className="text-xs sm:text-sm font-semibold text-[#8B2D6C] hover:underline shrink-0 ml-2">
               View all
             </button>
           </div>
 
-          <div className="mt-6 flex flex-col gap-4">
+          <div className="mt-4 sm:mt-6 flex flex-col gap-3 sm:gap-4">
             {dashboardData?.upcomingAppointments &&
             dashboardData.upcomingAppointments.length > 0 ? (
               dashboardData.upcomingAppointments.map((appointment, index) => (
                 <div
                   key={index}
-                  className="flex items-center justify-between rounded-2xl border border-[#F1E8FF] bg-[#FDFBFF] px-4 py-3"
+                  className="flex items-center justify-between rounded-xl sm:rounded-2xl border border-[#F1E8FF] bg-[#FDFBFF] px-3 sm:px-4 py-2.5 sm:py-3"
                 >
-                  <div className="flex items-center gap-4">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#F1E8FF] text-base font-semibold text-[#8B2D6C]">
+                  <div className="flex items-center gap-2 sm:gap-4 min-w-0 flex-1">
+                    <div className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-[#F1E8FF] text-sm sm:text-base font-semibold text-[#8B2D6C] shrink-0">
                       {appointment.doctorName.charAt(0)}
                     </div>
-                    <div>
-                      <p className="text-sm font-semibold text-[#2C1B3A]">
+                    <div className="min-w-0 flex-1">
+                      <p className="text-xs sm:text-sm font-semibold text-[#2C1B3A] truncate">
                         {appointment.doctorName}
                       </p>
-                      <p className="text-xs text-[#8F82B0]">
+                      <p className="text-xs text-[#8F82B0] truncate">
                         {appointment.specialty}
                       </p>
                     </div>
                   </div>
-                  <span className="rounded-full bg-[#EAFBEC] px-4 py-1 text-xs font-semibold text-[#2D9E5F]">
+                  <span className="rounded-full bg-[#EAFBEC] px-2 sm:px-4 py-1 text-xs font-semibold text-[#2D9E5F] shrink-0 ml-2">
                     Upcoming
                   </span>
                 </div>
               ))
             ) : (
-              <div className="flex flex-col items-center justify-center py-8 text-center">
-                <p className="text-sm text-[#8F82B0]">
+              <div className="flex flex-col items-center justify-center py-6 sm:py-8 text-center">
+                <p className="text-xs sm:text-sm text-[#8F82B0]">
                   No upcoming appointments
                 </p>
               </div>
@@ -291,29 +291,29 @@ export default function DashboardPage() {
         </div>
 
 {coursesLoading ? (
-          <div className="rounded-3xl border border-[#EFE7FF] bg-white p-8 shadow-sm shadow-[#E7DFFF] flex flex-col items-center justify-center h-full">
-            <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-[#8B2D6C] border-r-transparent"></div>
-            <p className="mt-4 text-sm text-[#8F82B0]">Loading courses...</p>
+          <div className="rounded-2xl sm:rounded-3xl border border-[#EFE7FF] bg-white p-6 sm:p-8 shadow-sm shadow-[#E7DFFF] flex flex-col items-center justify-center min-h-[300px] sm:h-full">
+            <div className="inline-block h-6 w-6 sm:h-8 sm:w-8 animate-spin rounded-full border-4 border-solid border-[#8B2D6C] border-r-transparent"></div>
+            <p className="mt-3 sm:mt-4 text-xs sm:text-sm text-[#8F82B0]">Loading courses...</p>
           </div>
         ) : courseRecommendations.length > 0 ? (
-          <div className="rounded-3xl bg-gradient-to-br from-[#8B2D6C] via-[#703C91] to-[#4A216A] p-8 text-white shadow-lg flex flex-col justify-center h-full">
-            <div className="flex items-start justify-between gap-4 mb-4">
-              <div className="flex-1">
-                <p className="text-xs uppercase tracking-[0.2em] text-[#D8C1F6]">
+          <div className="rounded-2xl sm:rounded-3xl bg-gradient-to-br from-[#8B2D6C] via-[#703C91] to-[#4A216A] p-4 sm:p-6 lg:p-8 text-white shadow-lg flex flex-col justify-center min-h-[300px] sm:h-full">
+            <div className="flex items-start justify-between gap-3 sm:gap-4 mb-3 sm:mb-4">
+              <div className="flex-1 min-w-0">
+                <p className="text-[10px] sm:text-xs uppercase tracking-[0.2em] text-[#D8C1F6]">
                   Recommended Courses
                 </p>
-                <h2 className="mt-2 text-xl font-semibold leading-tight">
+                <h2 className="mt-1 sm:mt-2 text-base sm:text-lg lg:text-xl font-semibold leading-tight">
                   Based on your assessments
                 </h2>
               </div>
-              <BookOpen className="h-6 w-6 text-[#F7EFFE] shrink-0" />
+              <BookOpen className="h-5 w-5 sm:h-6 sm:w-6 text-[#F7EFFE] shrink-0" />
             </div>
 
-            <p className="text-sm text-[#E5D4FA] mb-6">
+            <p className="text-xs sm:text-sm text-[#E5D4FA] mb-4 sm:mb-6">
               Personalized course recommendations to support your child&apos;s growth and development
             </p>
 
-            <div className="space-y-3 max-h-[300px] overflow-y-auto pr-2">
+            <div className="space-y-2 sm:space-y-3 max-h-[250px] sm:max-h-[300px] overflow-y-auto pr-1 sm:pr-2">
               {courseRecommendations.slice(0, 5).map((course, index) => (
                 <button
                   key={index}
@@ -322,34 +322,34 @@ export default function DashboardPage() {
                     setSelectedCourseTitle(course.statement);
                     setIframeLoading(true);
                   }}
-                  className="w-full text-left rounded-2xl bg-white/10 backdrop-blur-sm p-4 transition-all hover:bg-white/20 hover:scale-[1.02] border border-white/10"
+                  className="w-full text-left rounded-xl sm:rounded-2xl bg-white/10 backdrop-blur-sm p-3 sm:p-4 transition-all hover:bg-white/20 hover:scale-[1.02] border border-white/10"
                 >
-                  <div className="flex items-start gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/20 text-white shrink-0">
-                      <GraduationCap className="h-5 w-5" />
+                  <div className="flex items-start gap-2 sm:gap-3">
+                    <div className="flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-lg sm:rounded-xl bg-white/20 text-white shrink-0">
+                      <GraduationCap className="h-4 w-4 sm:h-5 sm:w-5" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h3 className="text-sm font-semibold text-white mb-1 line-clamp-2">
+                      <h3 className="text-xs sm:text-sm font-semibold text-white mb-1 line-clamp-2">
                         {course.statement}
                       </h3>
-                      <p className="text-xs text-[#D8C1F6]">
+                      <p className="text-[10px] sm:text-xs text-[#D8C1F6]">
                         From: {course.surveyName}
                       </p>
                     </div>
-                    <ArrowRight className="h-5 w-5 text-white/60 shrink-0" />
+                    <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5 text-white/60 shrink-0" />
                   </div>
                 </button>
               ))}
             </div>
 
             {courseRecommendations.length > 5 && (
-              <p className="mt-4 text-xs text-[#D8C1F6] text-center">
+              <p className="mt-3 sm:mt-4 text-[10px] sm:text-xs text-[#D8C1F6] text-center">
                 +{courseRecommendations.length - 5} more courses available
               </p>
             )}
           </div>
         ) : (
-          <div className="rounded-3xl bg-gradient-to-br from-[#4A216A] via-[#703C91] to-[#4A216A] p-4 px-8 pt-8 text-white shadow-lg flex flex-col justify-center h-full relative overflow-hidden">
+          <div className="rounded-2xl sm:rounded-3xl bg-gradient-to-br from-[#4A216A] via-[#703C91] to-[#4A216A] p-3 sm:p-4 lg:px-8 lg:pt-8 text-white shadow-lg flex flex-col justify-center min-h-[300px] sm:h-full relative overflow-hidden">
 
 
             <div className="relative flex-1 min-h-0">
@@ -380,10 +380,10 @@ export default function DashboardPage() {
 
                         <div className="relative z-10 flex flex-col flex-1 justify-between">
                           {/* Top Section: Category and Title */}
-                          <div className="flex flex-col gap-[9px]">
+                          <div className="flex flex-col gap-2 sm:gap-[9px]">
                             {/* Category */}
                             <p 
-                              className="text-[12.87px] uppercase text-[#C0C0C0] font-poppins font-normal leading-[0.93em] tracking-[0.08em]"
+                              className="text-[10px] sm:text-[12.87px] uppercase text-[#C0C0C0] font-poppins font-normal leading-[0.93em] tracking-[0.08em]"
                               style={{ fontFamily: 'Poppins, sans-serif' }}
                             >
                               Category - {course.category}
@@ -391,7 +391,7 @@ export default function DashboardPage() {
 
                             {/* Course Title */}
                             <h3 
-                              className="text-[14px] font-semibold text-white leading-[1.655em] line-clamp-2"
+                              className="text-xs sm:text-[14px] font-semibold text-white leading-[1.655em] line-clamp-2"
                               style={{ fontFamily: 'Urbanist, sans-serif', fontWeight: 600 }}
                             >
                               {course.title}
@@ -399,7 +399,7 @@ export default function DashboardPage() {
                           </div>
 
                           {/* Middle Section: Continue Button */}
-                          <div className="flex items-start mt-5">
+                          <div className="flex items-start mt-3 sm:mt-5">
                             <button
                               onClick={(e) => {
                                 e.stopPropagation();
@@ -407,8 +407,8 @@ export default function DashboardPage() {
                                 setSelectedCourseTitle(course.title);
                                 setIframeLoading(true);
                               }}
-                              className="relative z-10 w-[103.83px] h-[28.31px] rounded-[16.95px] border border-white bg-white/27 flex items-center justify-center text-white text-[12px] font-poppins font-normal leading-[0.56em] hover:bg-white/35 transition-colors"
-                              style={{ fontFamily: 'Poppins, sans-serif', padding: '6.1px 13.56px' }}
+                              className="relative z-10 w-[90px] sm:w-[103.83px] h-[26px] sm:h-[28.31px] rounded-[14px] sm:rounded-[16.95px] border border-white bg-white/27 flex items-center justify-center text-white text-[10px] sm:text-[12px] font-poppins font-normal leading-[0.56em] hover:bg-white/35 transition-colors"
+                              style={{ fontFamily: 'Poppins, sans-serif', padding: '5px 12px' }}
                             >
                               Continue→
                             </button>
@@ -428,12 +428,12 @@ export default function DashboardPage() {
                   }
                 }}
                 disabled={currentSlide === 0}
-                className={`absolute -left-7 top-1/2 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm text-white hover:bg-white/30 transition-colors z-10 ${
+                className={`absolute -left-3 sm:-left-7 top-1/2 -translate-y-1/2 flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm text-white hover:bg-white/30 transition-colors z-10 ${
                   currentSlide === 0 ? 'opacity-50 cursor-not-allowed' : ''
                 }`}
                 aria-label="Previous course"
               >
-                <ChevronLeft className="h-5 w-5" />
+                <ChevronLeft className="h-4 w-4 sm:h-5 sm:w-5" />
               </button>
 
               <button
@@ -443,12 +443,12 @@ export default function DashboardPage() {
                   }
                 }}
                 disabled={currentSlide === availableCourses.length - 1}
-                className={`absolute -right-7 top-1/2 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm text-white hover:bg-white/30 transition-colors z-10 ${
+                className={`absolute -right-3 sm:-right-7 top-1/2 -translate-y-1/2 flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm text-white hover:bg-white/30 transition-colors z-10 ${
                   currentSlide === availableCourses.length - 1 ? 'opacity-50 cursor-not-allowed' : ''
                 }`}
                 aria-label="Next course"
               >
-                <ChevronRight className="h-5 w-5" />
+                <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5" />
               </button>
             </div>
 
@@ -473,10 +473,10 @@ export default function DashboardPage() {
 
       {/* Iframe Modal for Course Content */}
       {selectedCourse && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-          <div className="relative w-full h-full max-w-7xl max-h-[90vh] bg-white rounded-3xl shadow-2xl overflow-hidden">
-            <div className="absolute top-0 left-0 right-0 z-10 flex items-center justify-between bg-gradient-to-b from-white to-white/95 px-6 py-4 border-b border-[#EFE7FF]">
-              <h3 className="text-lg font-semibold text-[#2C1B3A] line-clamp-1 pr-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-2 sm:p-4">
+          <div className="relative w-full h-full max-w-7xl max-h-[95vh] sm:max-h-[90vh] bg-white rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden">
+            <div className="absolute top-0 left-0 right-0 z-10 flex items-center justify-between bg-gradient-to-b from-white to-white/95 px-3 sm:px-6 py-3 sm:py-4 border-b border-[#EFE7FF]">
+              <h3 className="text-sm sm:text-base lg:text-lg font-semibold text-[#2C1B3A] line-clamp-1 pr-2 sm:pr-4">
                 {selectedCourseTitle || "Course Content"}
               </h3>
               <button
@@ -484,24 +484,24 @@ export default function DashboardPage() {
                   setSelectedCourse(null);
                   setSelectedCourseTitle(null);
                 }}
-                className="flex h-10 w-10 items-center justify-center rounded-full bg-[#F1E8FF] text-[#8B2D6C] transition-colors hover:bg-[#8B2D6C] hover:text-white shrink-0"
+                className="flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-[#F1E8FF] text-[#8B2D6C] transition-colors hover:bg-[#8B2D6C] hover:text-white shrink-0"
                 aria-label="Close course"
               >
-                <X className="h-5 w-5" />
+                <X className="h-4 w-4 sm:h-5 sm:w-5" />
               </button>
             </div>
             {iframeLoading && (
-              <div className="absolute inset-0 flex items-center justify-center pt-16 bg-white/80 backdrop-blur-sm z-5">
+              <div className="absolute inset-0 flex items-center justify-center pt-12 sm:pt-16 bg-white/80 backdrop-blur-sm z-5">
                 <div className="text-center">
-                  <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-[#8B2D6C] border-r-transparent"></div>
-                  <p className="mt-4 text-sm text-[#8F82B0]">Loading course...</p>
+                  <div className="inline-block h-6 w-6 sm:h-8 sm:w-8 animate-spin rounded-full border-4 border-solid border-[#8B2D6C] border-r-transparent"></div>
+                  <p className="mt-3 sm:mt-4 text-xs sm:text-sm text-[#8F82B0]">Loading course...</p>
                 </div>
               </div>
             )}
            <iframe
         key={selectedCourse}
         src={selectedCourse}
-        className="w-full h-full pt-16 bg-white"
+        className="w-full h-full pt-12 sm:pt-16 bg-white"
         title="Course Content"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen
